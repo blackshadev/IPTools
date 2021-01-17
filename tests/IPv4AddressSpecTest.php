@@ -10,6 +10,7 @@ use Littledev\IPTools\Address\AddressInterface;
 
 class IPv4AddressSpecTest extends TestCase
 {
+
     public function testItParsesIPv4(): void
     {
         $value = '127.1.9.254';

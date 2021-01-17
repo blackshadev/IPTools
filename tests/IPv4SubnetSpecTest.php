@@ -4,28 +4,44 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
+use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 use Littledev\IPTools\Subnet\IPv4Subnet;
+
 
 class IPv4SubnetSpecTest extends TestCase
 {
-    public function testItWorks(): void
+    /**
+     * @dataProvider validPrefixDataProvider
+     */
+    public function testItWorks($prefix, $string, $byteArray): void
     {
-        $sub = IPv4Subnet::fromPrefix(32);
+        $sub = IPv4Subnet::fromPrefix($prefix);
 
-        self::assertEquals(32, $sub->prefix());
-        self::assertEquals('255.255.255.255', (string)$sub);
-        self::assertEquals([255,255,255,255], $sub->byteArray());
+        self::assertEquals($prefix, $sub->prefix());
+        self::assertEquals($string, (string)$sub);
+        self::assertEquals($byteArray, $sub->byteArray());
 
-        $sub = IPv4Subnet::fromPrefix(24);
+    }
 
-        self::assertEquals(24, $sub->prefix());
-        self::assertEquals('255.255.255.0', (string)$sub);
-        self::assertEquals([255,255,255,0], $sub->byteArray());
+    public function testItErrorsOnToBigPrefix()
+    {
+        $this->expectException(InvalidPrefixArgumentException::class);
+        IPv4Subnet::fromPrefix(33);
+    }
 
-        $sub = IPv4Subnet::fromPrefix(30);
+    public function testItErrorsToNegativePrefix()
+    {
+        $this->expectException(InvalidPrefixArgumentException::class);
+        IPv4Subnet::fromPrefix(-1);
+    }
 
-        self::assertEquals(30, $sub->prefix());
-        self::assertEquals('255.255.255.252', (string)$sub);
-        self::assertEquals([255,255,255,252], $sub->byteArray());
+    public function validPrefixDataProvider()
+    {
+        return [
+            [32, '255.255.255.255', [255, 255, 255, 255]],
+            [24, '255.255.255.0'  , [255, 255, 255, 0  ]],
+            [0 , '0.0.0.0'        , [0  , 0  , 0  , 0  ]],
+            [30, '255.255.255.252', [255, 255, 255, 252]],
+        ];
     }
 }

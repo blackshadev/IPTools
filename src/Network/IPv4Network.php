@@ -44,16 +44,16 @@ class IPv4Network implements NetworkInterface
 
     public function contains(AddressInterface $address): bool
     {
-        return (strcmp($address->inAddr(), $this->getNetwork()->inAddr()) >= 0)
-            && (strcmp($address->inAddr(), $this->getBroadcast()->inAddr()) <= 0);
+        return (strcmp($address->inAddr(), $this->getFirstIP()->inAddr()) >= 0)
+            && (strcmp($address->inAddr(), $this->getLastIP()->inAddr()) <= 0);
     }
 
-    public function getBroadcast(): AddressInterface
+    public function getLastIP(): AddressInterface
     {
-        return IPv4Address::fromInAddr($this->getNetwork()->inAddr() | ~$this->subnet()->inAddr());
+        return IPv4Address::fromInAddr($this->getFirstIP()->inAddr() | ~$this->subnet()->inAddr());
     }
 
-    public function getNetwork(): AddressInterface
+    public function getFirstIP(): AddressInterface
     {
         return IPv4Address::fromInAddr($this->address()->inAddr() & $this->subnet()->inAddr());
     }

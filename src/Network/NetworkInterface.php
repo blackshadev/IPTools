@@ -10,7 +10,7 @@ interface NetworkInterface
     public function address(): AddressInterface;
     public function subnet(): SubnetInterface;
     public function contains(AddressInterface $address): bool;
-    public function getBroadcast(): AddressInterface;
-    public function getNetwork(): AddressInterface;
+    public function getLastIP(): AddressInterface;
+    public function getFirstIP(): AddressInterface;
 
 }

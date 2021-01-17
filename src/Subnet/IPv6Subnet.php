@@ -3,12 +3,16 @@
 namespace Littledev\IPTools\Subnet;
 
 use Littledev\IPTools\Address\IPv6Address;
+use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
 class IPv6Subnet implements SubnetInterface
 {
-
     public static function fromPrefix(int $prefix): self
     {
+        if ($prefix < 0 || $prefix > self::MAX_IPv6) {
+            throw InvalidPrefixArgumentException::invalidInput($prefix);
+        }
+
         $subnet = new self();
         $subnet->prefix = $prefix;
 
