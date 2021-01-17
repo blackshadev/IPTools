@@ -15,7 +15,7 @@ class IPv6Address implements AddressInterface
 
     public static function fromBinary(string $binaryString): self
     {
-        if(!preg_match('/^[01]{64}$/', $binaryString)) {
+        if(!preg_match('/^[01]{128}$/', $binaryString)) {
             throw InvalidIPv6ArgumentException::binary($binaryString);
         }
 
