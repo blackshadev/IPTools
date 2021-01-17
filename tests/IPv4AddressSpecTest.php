@@ -5,8 +5,8 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
 use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
-use Littledev\IPTools\IPv4Address;
-use Littledev\IPTools\AddressInterface;
+use Littledev\IPTools\Address\IPv4Address;
+use Littledev\IPTools\Address\AddressInterface;
 
 class IPv4AddressSpecTest extends TestCase
 {

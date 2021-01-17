@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
-use Littledev\IPTools\IPv4Address;
-use Littledev\IPTools\AddressInterface;
-use Littledev\IPTools\IPv4Network;
+use Littledev\IPTools\Network\IPv4Network;
+use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
 class IPv4NetworkSpecTest extends TestCase

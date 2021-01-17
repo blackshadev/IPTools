@@ -1,8 +1,9 @@
 <?php
 
+namespace Littledev\IPTools\Network;
 
-namespace Littledev\IPTools;
-
+use Littledev\IPTools\Address\AddressInterface;
+use Littledev\IPTools\Subnet\SubnetInterface;
 
 interface NetworkInterface
 {

@@ -1,6 +1,8 @@
 <?php
 
-namespace Littledev\IPTools;
+namespace Littledev\IPTools\Subnet;
+
+use Littledev\IPTools\Address\IPv4Address;
 
 class IPv4Subnet implements SubnetInterface
 {

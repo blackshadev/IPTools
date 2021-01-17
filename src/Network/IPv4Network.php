@@ -1,8 +1,12 @@
 <?php
 
-namespace Littledev\IPTools;
+namespace Littledev\IPTools\Network;
 
+use Littledev\IPTools\Address\AddressInterface;
+use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Helpers\Prefix;
+use Littledev\IPTools\Subnet\IPv4Subnet;
+use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv4Network implements NetworkInterface
 {
