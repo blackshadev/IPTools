@@ -1,6 +1,6 @@
 <?php
 
-namespace Littledev\IPTools;
+namespace Littledev\IPTools\Address;
 
 interface AddressInterface
 {

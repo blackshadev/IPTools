@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Littledev\IPTools;
+namespace Littledev\IPTools\Address;
 
 use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
 use Littledev\IPTools\Helpers\ByteArray;

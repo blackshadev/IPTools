@@ -10,7 +10,7 @@ class Prefix
 {
     public static function prefixAsInt(?string $prefix, int $max): int
     {
-        if (is_string($prefix) && !preg_match('/^\d{1,2}$/', $prefix)) {
+        if (is_string($prefix) && !preg_match('/^\d{1,3}$/', $prefix)) {
             throw InvalidPrefixArgumentException::invalidInput($prefix);
         }
 

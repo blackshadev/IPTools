@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
-use Littledev\IPTools\IPv4Address;
-use Littledev\IPTools\AddressInterface;
-use Littledev\IPTools\IPv4Network;
+use Littledev\IPTools\Network\IPv4Network;
+use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
 class IPv4NetworkSpecTest extends TestCase
@@ -19,8 +17,8 @@ class IPv4NetworkSpecTest extends TestCase
         self::assertEquals('127.0.0.1', $network->address());
         self::assertEquals(24, $network->subnet()->prefix());
 
-        self::assertEquals('127.0.0.0', $network->getNetwork());
-        self::assertEquals('127.0.0.255', $network->getBroadcast());
+        self::assertEquals('127.0.0.0', $network->getFirstIP());
+        self::assertEquals('127.0.0.255', $network->getLastIP());
     }
 
     public function testContainsWorksWithAFullSubnet(): void
@@ -63,5 +61,16 @@ class IPv4NetworkSpecTest extends TestCase
     {
         $this->expectException(InvalidPrefixArgumentException::class);
         IPv4Network::parse('127.0.0.1/64');
+    }
+
+    public function testItCalculatesFirstAndLastIPs(): void
+    {
+        $net = IPv4Network::parse('127.0.0.1/24');
+        self::assertEquals('127.0.0.0', (string)$net->getFirstIP());
+        self::assertEquals('127.0.0.255', (string)$net->getLastIP());
+
+        $net = IPv4Network::parse('127.0.0.30/30');
+        self::assertEquals('127.0.0.28', (string)$net->getFirstIP());
+        self::assertEquals('127.0.0.31', (string)$net->getLastIP());
     }
 }

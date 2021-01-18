@@ -1,12 +1,18 @@
 <?php
 
-namespace Littledev\IPTools;
+namespace Littledev\IPTools\Subnet;
+
+use Littledev\IPTools\Address\IPv4Address;
+use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
 class IPv4Subnet implements SubnetInterface
 {
 
     public static function fromPrefix(int $prefix): self
     {
+        if ($prefix < 0 || $prefix > self::MAX_IPv4) {
+            throw InvalidPrefixArgumentException::invalidInput($prefix);
+        }
         $subnet = new self();
         $subnet->prefix = $prefix;
 
