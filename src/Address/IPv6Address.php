@@ -4,6 +4,7 @@ namespace Littledev\IPTools\Address;
 
 use Littledev\IPTools\Errors\InvalidIPv6ArgumentException;
 use Littledev\IPTools\Helpers\ByteArray;
+use Littledev\IPTools\IPFamily;
 
 class IPv6Address implements AddressInterface
 {
@@ -50,7 +51,7 @@ class IPv6Address implements AddressInterface
 
     public function version(): string
     {
-        return AddressInterface::IP_VERSION_6;
+        return IPFamily::IPv6;
     }
 
     public function reversePointer(): string
