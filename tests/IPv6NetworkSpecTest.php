@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
 use Littledev\IPTools\Network\IPv6Network;
+use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Address\IPv6Address;
 use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
@@ -53,6 +54,13 @@ class IPv6NetworkSpecTest extends TestCase
         self::assertFalse($network->contains(IPv6Address::parse('2001:db8::ff')));
         self::assertFalse($network->contains(IPv6Address::parse('2001:db8::00')));
         self::assertFalse($network->contains(IPv6Address::parse('2001:4860:4860::8844')));
+    }
+
+    public function testContainsWorksWithIPv4(): void
+    {
+        $network = IPv6Network::parse('::808:808/64');
+        self::assertFalse($network->contains(IPv4Address::parse('8.8.8.8')));
+        self::assertFalse($network->contains(IPv4Address::parse('127.0.0.1')));
     }
 
     public function testItDefaultsPrefixTo32(): void
