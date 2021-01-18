@@ -7,6 +7,10 @@ wrapping everything I needed in separate classes. Which lead me to create my own
 
 The state is pretty alpha at this point but feel free to use it. I do my best to not change the interfaces and facades if possible.
 
+## Installation
+
+`composer require littledevnl/iptools`
+
 ## Examples
 
 ```php
