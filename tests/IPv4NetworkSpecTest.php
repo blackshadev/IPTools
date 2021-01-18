@@ -54,6 +54,17 @@ class IPv4NetworkSpecTest extends TestCase
         self::assertFalse($network->contains(IPv6Address::parse('::ffff:808:808')));
     }
 
+    public function testContainsWorksWithNetworkInNetwork(): void
+    {
+        $network = IPv4Network::parse('127.0.0.1/16');
+
+        self::assertTrue($network->contains(IPv4Network::parse('127.0.0.1/16')));
+        self::assertTrue($network->contains(IPv4Network::parse('127.0.1.1/24')));
+        self::assertTrue($network->contains(IPv4Network::parse('127.0.0.4/23')));
+
+        self::assertFalse($network->contains(IPv4Network::parse('172.16.0.1/16')));
+    }
+
     public function testItDefaultsPrefixTo32(): void
     {
         $network = IPv4Network::parse('127.0.0.1');

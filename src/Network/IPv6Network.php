@@ -7,6 +7,7 @@ namespace Littledev\IPTools\Network;
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv6Address;
 use Littledev\IPTools\Helpers\Prefix;
+use Littledev\IPTools\RoutableInterface;
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 
@@ -45,8 +46,12 @@ class IPv6Network implements NetworkInterface
         return $this->subnet;
     }
 
-    public function contains(AddressInterface $address): bool
+    public function contains(RoutableInterface $address): bool
     {
+        if ($address instanceof NetworkInterface) {
+            $address = $address->address();
+        }
+
         return (strcmp($address->inAddr(), $this->getFirstIP()->inAddr()) >= 0)
             && (strcmp($address->inAddr(), $this->getLastIP()->inAddr()) <= 0);
     }

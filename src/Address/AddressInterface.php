@@ -2,7 +2,9 @@
 
 namespace Littledev\IPTools\Address;
 
-interface AddressInterface
+use Littledev\IPTools\RoutableInterface;
+
+interface AddressInterface extends RoutableInterface
 {
     public function version(): string;
     public function reversePointer(): string;
