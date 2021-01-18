@@ -18,7 +18,7 @@ class IPv4Network implements NetworkInterface
         $arr = explode('/', $cidr);
 
         $ip = $arr[0];
-        $prefix = Prefix::prefixAsInt($arr[1] ?? null, IPv4Subnet::MAX_IPv4);
+        $prefix = Prefix::prefixAsInt($arr[1] ?? null, SubnetInterface::MAX_IPv4);
 
         return new self(
             IPv4Address::parse($ip),

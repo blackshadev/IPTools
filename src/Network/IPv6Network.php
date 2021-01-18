@@ -6,15 +6,28 @@ namespace Littledev\IPTools\Network;
 
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv6Address;
+use Littledev\IPTools\Helpers\Prefix;
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv6Network implements NetworkInterface
 {
-
     private IPv6Address $address;
 
     private IPv6Subnet $subnet;
+
+    public static function parse(string $cidr): self
+    {
+        $arr = explode('/', $cidr);
+
+        $ip = $arr[0];
+        $prefix = Prefix::prefixAsInt($arr[1] ?? null, SubnetInterface::MAX_IPv6);
+
+        return new self(
+            IPv6Address::parse($ip),
+            IPv6Subnet::fromPrefix($prefix)
+        );
+    }
 
     private function __construct(IPv6Address $address, IPv6Subnet $subnet)
     {
