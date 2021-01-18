@@ -4,7 +4,7 @@
 namespace Littledev\IPTools\Errors;
 
 
-class InvalidIPv6ArgumentException extends InvalidIPArgumentException
+class InvalidIPv6ArgumentException extends InvalidArgumentException
 {
     public static function address(string $address)
     {
