@@ -1,5 +1,5 @@
 {
-    "name": "littledev/iptools",
+    "name": "littledevnl/iptools",
     "description": "Small package for handling things with IPs and networks",
     "type": "library",
     "license": "MIT",
