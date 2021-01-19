@@ -7,7 +7,6 @@ use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
 class IPv4Subnet implements SubnetInterface
 {
-
     public static function fromPrefix(int $prefix): self
     {
         if ($prefix < 0 || $prefix > self::MAX_IPv4) {
@@ -46,5 +45,10 @@ class IPv4Subnet implements SubnetInterface
     public function byteArray(): array
     {
         return $this->subnet->byteArray();
+    }
+
+    public function contains(SubnetInterface $subnet): bool
+    {
+        return $subnet->prefix() >= $this->prefix();
     }
 }

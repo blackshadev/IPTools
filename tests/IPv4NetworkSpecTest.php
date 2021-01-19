@@ -63,6 +63,7 @@ class IPv4NetworkSpecTest extends TestCase
         self::assertTrue($network->contains(IPv4Network::parse('127.0.0.4/23')));
 
         self::assertFalse($network->contains(IPv4Network::parse('172.16.0.1/16')));
+        self::assertFalse($network->contains(IPv4Network::parse('127.0.0.1/8')));
     }
 
     public function testItDefaultsPrefixTo32(): void

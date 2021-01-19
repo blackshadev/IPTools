@@ -47,4 +47,9 @@ class IPv6Subnet implements SubnetInterface
     {
         return (string)$this->subnet;
     }
+
+    public function contains(SubnetInterface $subnet): bool
+    {
+        return $subnet->prefix() >= $this->prefix();
+    }
 }

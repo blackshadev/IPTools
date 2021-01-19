@@ -2,7 +2,7 @@
 
 namespace Littledev\IPTools\Network;
 
-use Littledev\IPTools\RoutableInterface;
+use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Helpers\Prefix;
@@ -43,14 +43,16 @@ class IPv4Network implements NetworkInterface
         return $this->subnet;
     }
 
-    public function contains(RoutableInterface $address): bool
+    public function contains(AddressableInterface $address): bool
     {
-        if ($address instanceof NetworkInterface) {
-            $address = $address->address();
+        if ($address->subnet() !== null
+            && !$this->subnet->contains($address->subnet())
+        ) {
+            return false;
         }
 
-        return (strcmp($address->inAddr(), $this->getFirstIP()->inAddr()) >= 0)
-            && (strcmp($address->inAddr(), $this->getLastIP()->inAddr()) <= 0);
+        return (strcmp($address->address()->inAddr(), $this->getFirstIP()->inAddr()) >= 0)
+            && (strcmp($address->address()->inAddr(), $this->getLastIP()->inAddr()) <= 0);
     }
 
     public function getLastIP(): AddressInterface

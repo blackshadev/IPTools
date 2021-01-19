@@ -10,6 +10,7 @@ interface SubnetInterface
     public function prefix(): int;
     public function inAddr(): string;
     public function byteArray(): array;
+    public function contains(SubnetInterface $subnet): bool;
     public function __toString(): string;
 
 }

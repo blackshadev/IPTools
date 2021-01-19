@@ -63,6 +63,18 @@ class IPv6NetworkSpecTest extends TestCase
         self::assertFalse($network->contains(IPv4Address::parse('127.0.0.1')));
     }
 
+    public function testContainsWorksWithNetworkInNetwork(): void
+    {
+        $network = IPv6Network::parse('2001:db8::/64');
+
+        self::assertTrue($network->contains(IPv6Network::parse('2001:db8::/64')));
+        self::assertTrue($network->contains(IPv6Network::parse('2001:db8::42/122')));
+        self::assertTrue($network->contains(IPv6Network::parse('2001:db8::43/128')));
+//
+        self::assertFalse($network->contains(IPv6Network::parse('2001:db9::/64')));
+        self::assertFalse($network->contains(IPv6Network::parse('2001:db8::/48')));
+    }
+
     public function testItDefaultsPrefixTo32(): void
     {
         $network = IPv6Network::parse('2001:db8::42');
