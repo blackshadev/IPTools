@@ -62,7 +62,7 @@ class IPv4Address implements AddressInterface
         return $this;
     }
 
-    public function subnet(): ?SubnetInterface
+    public function subnet(): SubnetInterface
     {
         return IPv4Subnet::fromPrefix(SubnetInterface::MAX_IPv4);
     }

@@ -48,14 +48,9 @@ class IPv6Network implements NetworkInterface
 
     public function contains(AddressableInterface $address): bool
     {
-        if ($address->subnet() !== null
-            && !$this->subnet->contains($address->subnet())
-        ) {
-            return false;
-        }
-
         return (strcmp($address->address()->inAddr(), $this->getFirstIP()->inAddr()) >= 0)
-            && (strcmp($address->address()->inAddr(), $this->getLastIP()->inAddr()) <= 0);
+            && (strcmp($address->address()->inAddr(), $this->getLastIP()->inAddr()) <= 0)
+            && $this->subnet->contains($address->subnet());
     }
 
     public function getLastIP(): AddressInterface

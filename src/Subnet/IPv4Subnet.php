@@ -4,6 +4,7 @@ namespace Littledev\IPTools\Subnet;
 
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\IPFamily;
 
 class IPv4Subnet implements SubnetInterface
 {
@@ -27,6 +28,11 @@ class IPv4Subnet implements SubnetInterface
     private function __construct()
     { }
 
+    public function version(): string
+    {
+        return IPFamily::IPv4;
+    }
+
     public function prefix(): int
     {
         return $this->prefix;
@@ -49,6 +55,7 @@ class IPv4Subnet implements SubnetInterface
 
     public function contains(SubnetInterface $subnet): bool
     {
-        return $subnet->prefix() >= $this->prefix();
+        return $subnet->version() === $this->version()
+            && $subnet->prefix() >= $this->prefix();
     }
 }

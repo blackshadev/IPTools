@@ -10,5 +10,5 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 interface AddressableInterface
 {
     public function address(): AddressInterface;
-    public function subnet(): ?SubnetInterface;
+    public function subnet(): SubnetInterface;
 }

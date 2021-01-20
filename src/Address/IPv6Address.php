@@ -60,7 +60,7 @@ class IPv6Address implements AddressInterface
         return $this;
     }
 
-    public function subnet(): ?SubnetInterface
+    public function subnet(): SubnetInterface
     {
         return IPv6Subnet::fromPrefix(SubnetInterface::MAX_IPv6);
     }
