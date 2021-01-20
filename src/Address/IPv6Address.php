@@ -5,10 +5,11 @@ namespace Littledev\IPTools\Address;
 use Littledev\IPTools\Errors\InvalidIPv6ArgumentException;
 use Littledev\IPTools\Helpers\ByteArray;
 use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Subnet\IPv6Subnet;
+use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv6Address implements AddressInterface
 {
-
     public static function isValid(string $address): bool
     {
         return filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
@@ -54,6 +55,16 @@ class IPv6Address implements AddressInterface
         return IPFamily::IPv6;
     }
 
+    public function address(): AddressInterface
+    {
+        return $this;
+    }
+
+    public function subnet(): SubnetInterface
+    {
+        return IPv6Subnet::fromPrefix(SubnetInterface::MAX_IPv6);
+    }
+
     public function reversePointer(): string
     {
         $unpacked = unpack('H*hex', $this->inAddr);
@@ -76,4 +87,5 @@ class IPv6Address implements AddressInterface
     {
         return inet_ntop($this->inAddr);
     }
+
 }

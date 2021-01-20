@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Littledev\IPTools\Network\IPv4Network;
 use PHPUnit\Framework\TestCase;
 
 use Littledev\IPTools\Network\IPv6Network;
@@ -61,6 +62,19 @@ class IPv6NetworkSpecTest extends TestCase
         $network = IPv6Network::parse('::808:808/64');
         self::assertFalse($network->contains(IPv4Address::parse('8.8.8.8')));
         self::assertFalse($network->contains(IPv4Address::parse('127.0.0.1')));
+    }
+
+    public function testContainsWorksWithNetworkInNetwork(): void
+    {
+        $network = IPv6Network::parse('2001:db8::/16');
+
+        self::assertTrue($network->contains(IPv6Network::parse('2001:db8::/64')));
+        self::assertTrue($network->contains(IPv6Network::parse('2001:db8::42/122')));
+        self::assertTrue($network->contains(IPv6Network::parse('2001:db8::43/128')));
+
+        self::assertFalse($network->contains(IPv6Network::parse('2002:db8::/16')));
+        self::assertFalse($network->contains(IPv6Network::parse('2001:db8::/10')));
+        self::assertFalse($network->contains(IPv4Network::parse('127.0.0.1/24')));
     }
 
     public function testItDefaultsPrefixTo32(): void

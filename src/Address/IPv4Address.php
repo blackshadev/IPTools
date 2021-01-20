@@ -7,6 +7,8 @@ namespace Littledev\IPTools\Address;
 use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
 use Littledev\IPTools\Helpers\ByteArray;
 use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Subnet\IPv4Subnet;
+use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv4Address implements AddressInterface
 {
@@ -53,6 +55,16 @@ class IPv4Address implements AddressInterface
     public function version(): string
     {
         return IPFamily::IPv4;
+    }
+
+    public function address(): AddressInterface
+    {
+        return $this;
+    }
+
+    public function subnet(): SubnetInterface
+    {
+        return IPv4Subnet::fromPrefix(SubnetInterface::MAX_IPv4);
     }
 
     public function reversePointer(): string
