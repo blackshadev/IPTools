@@ -6,7 +6,6 @@ use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Address\IPv6Address;
 use Littledev\IPTools\Errors\InvalidAddressArgumentException;
-use Littledev\IPTools\Errors\InvalidNetworkArgumentException;
 
 final class Address
 {

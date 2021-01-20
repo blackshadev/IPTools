@@ -14,7 +14,7 @@ class Prefix
             throw InvalidPrefixArgumentException::invalidInput($prefix);
         }
 
-        $int = $prefix != null ? ((int)$prefix) :  $max;
+        $int = $prefix != null ? $prefix :  $max;
         if($int > $max) {
             throw InvalidPrefixArgumentException::size($prefix, $max);
         }

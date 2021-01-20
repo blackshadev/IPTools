@@ -21,11 +21,11 @@ class IPv6Network implements NetworkInterface
     {
         $arr = explode('/', $cidr);
 
-        $ip = $arr[0];
+        $ip = IPv6Address::parse($arr[0]);
         $prefix = Prefix::prefixAsInt($arr[1] ?? null, SubnetInterface::MAX_IPv6);
 
         return new self(
-            IPv6Address::parse($ip),
+            $ip,
             IPv6Subnet::fromPrefix($prefix)
         );
     }
