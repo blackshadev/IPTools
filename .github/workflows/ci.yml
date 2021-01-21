@@ -30,3 +30,6 @@ jobs:
 
             - name: Run PHPUnit unit tests
               run: vendor/bin/phpunit
+
+            - name: Run Infection mutation tests
+              run: vendor/bin/infection --threads=4 --min-covered-msi=100
