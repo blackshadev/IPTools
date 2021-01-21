@@ -51,7 +51,7 @@ class IPv6Subnet implements SubnetInterface
 
     public function __toString(): string
     {
-        return (string)$this->subnet;
+        return $this->subnet;
     }
 
     public function contains(SubnetInterface $subnet): bool

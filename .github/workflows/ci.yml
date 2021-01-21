@@ -3,15 +3,30 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-    unit-tests:
-        name: Unit tests
+    tests:
+        name: Tests ${{ matrix.php }}
         runs-on: ubuntu-latest
+
+        strategy:
+          matrix:
+            php: [7.4, 8.0]
+            experimental: [ false ]
+            include:
+              - php: 8.1
+                experimental: true
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: ${{ matrix.php }}
+                coverage: xdebug
 
             - name: Install composer dependencies
               run: composer install --prefer-dist --ignore-platform-reqs
 
             - name: Run PHPUnit unit tests
-              run: php7.4 vendor/bin/phpunit
+              run: vendor/bin/phpunit

@@ -29,7 +29,7 @@ class IPv4SubnetSpecTest extends TestCase
         IPv4Subnet::fromPrefix(33);
     }
 
-    public function testItErrorsToNegativePrefix()
+    public function testItErrorsOnNegativePrefix()
     {
         $this->expectException(InvalidPrefixArgumentException::class);
         IPv4Subnet::fromPrefix(-1);

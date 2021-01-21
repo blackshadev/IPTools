@@ -10,11 +10,11 @@ class Prefix
 {
     public static function prefixAsInt(?string $prefix, int $max): int
     {
-        if (is_string($prefix) && !preg_match('/^\d{1,3}$/', $prefix)) {
+        if (is_string($prefix) && !preg_match('/^\d+$/', $prefix)) {
             throw InvalidPrefixArgumentException::invalidInput($prefix);
         }
 
-        $int = $prefix != null ? $prefix :  $max;
+        $int = $prefix !== null ? $prefix :  $max;
         if($int > $max) {
             throw InvalidPrefixArgumentException::size($prefix, $max);
         }

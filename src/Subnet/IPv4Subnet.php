@@ -40,7 +40,7 @@ class IPv4Subnet implements SubnetInterface
 
     public function __toString(): string
     {
-        return (string)$this->subnet;
+        return $this->subnet;
     }
 
     public function inAddr(): string
