@@ -6,7 +6,7 @@ namespace Littledev\IPTools\Network;
 
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv6Address;
-use Littledev\IPTools\Helpers\Prefix;
+use Littledev\IPTools\Helper\Prefix;
 use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;

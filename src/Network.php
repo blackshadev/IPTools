@@ -2,7 +2,7 @@
 
 namespace Littledev\IPTools;
 
-use Littledev\IPTools\Errors\InvalidNetworkArgumentException;
+use Littledev\IPTools\Error\InvalidNetworkArgumentException;
 use Littledev\IPTools\Network\IPv4Network;
 use Littledev\IPTools\Network\IPv6Network;
 use Littledev\IPTools\Network\NetworkInterface;

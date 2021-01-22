@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Littledev\IPTools\Network;
 use Littledev\IPTools\IPFamily;
-use Littledev\IPTools\Errors\InvalidNetworkArgumentException;
+use Littledev\IPTools\Error\InvalidNetworkArgumentException;
 
 class NetworkSpecTest extends TestCase
 {

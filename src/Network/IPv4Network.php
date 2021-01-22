@@ -5,7 +5,7 @@ namespace Littledev\IPTools\Network;
 use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv4Address;
-use Littledev\IPTools\Helpers\Prefix;
+use Littledev\IPTools\Helper\Prefix;
 use Littledev\IPTools\Subnet\IPv4Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 

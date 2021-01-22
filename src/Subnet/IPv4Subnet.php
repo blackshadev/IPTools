@@ -3,7 +3,7 @@
 namespace Littledev\IPTools\Subnet;
 
 use Littledev\IPTools\Address\IPv4Address;
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 use Littledev\IPTools\IPFamily;
 
 class IPv4Subnet implements SubnetInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
+use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\IPFamily;
 
@@ -44,5 +44,30 @@ class IPv4AddressSpecTest extends TestCase
     {
         $this->expectException(InvalidIPv4ArgumentException::class);
         IPv4Address::parse('127.0.0');
+    }
+
+    public function testItParsesByteArray(): void
+    {
+        $input = [127, 0, 0, 1];
+        $ip = IPv4Address::fromByteArray($input);
+        self::assertEquals($input, $ip->byteArray());
+    }
+
+    /** @dataProvider invalidByteArrayProvider */
+    public function testItThrowsOnInvalidByteArray($byteArray): void
+    {
+        $this->expectException(InvalidIPv4ArgumentException::class);
+        IPv4Address::fromByteArray($byteArray);
+    }
+
+    public function invalidByteArrayProvider(): Generator
+    {
+        yield [ [] ];
+        yield [ ['a', 0, 0, 1] ];
+        yield [ [256, 0, 0, 1] ];
+        yield [ [127, 0, 0, -1] ];
+        yield [ [127, 0, 0, 1, 1] ];
+        yield [ [127, 0, 0] ];
+        yield [ [127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127] ];
     }
 }

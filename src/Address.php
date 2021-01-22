@@ -5,8 +5,7 @@ namespace Littledev\IPTools;
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Address\IPv6Address;
-use Littledev\IPTools\Errors\InvalidAddressArgumentException;
-use Littledev\IPTools\Errors\InvalidNetworkArgumentException;
+use Littledev\IPTools\Error\InvalidAddressArgumentException;
 
 final class Address
 {
@@ -22,7 +21,20 @@ final class Address
             return self::ipv6($ip);
         }
 
-        throw InvalidAddressArgumentException::invalidInput($ip);
+        throw InvalidAddressArgumentException::address($ip);
+    }
+
+    public static function byteArray(array $byteArray): AddressInterface
+    {
+        if (count($byteArray) === IPFamily::OCTET_IPv4) {
+            return IPv4Address::fromByteArray($byteArray);
+        }
+
+        if (count($byteArray) === IPFamily::OCTET_IPv6) {
+            return IPv6Address::fromByteArray($byteArray);
+        }
+
+        throw InvalidAddressArgumentException::invalidByteArrayLength($byteArray);
     }
 
     public static function ipv4(string $address): AddressInterface

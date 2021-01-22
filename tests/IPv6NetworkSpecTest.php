@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Littledev\IPTools\Network\IPv6Network;
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Address\IPv6Address;
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 
 class IPv6NetworkSpecTest extends TestCase
 {

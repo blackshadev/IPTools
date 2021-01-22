@@ -2,8 +2,8 @@
 
 namespace Littledev\IPTools\Address;
 
-use Littledev\IPTools\Errors\InvalidIPv6ArgumentException;
-use Littledev\IPTools\Helpers\ByteArray;
+use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
+use Littledev\IPTools\Helper\ByteArray;
 use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
@@ -41,6 +41,15 @@ class IPv6Address implements AddressInterface
     public static function fromInAddr(string $inAddr)
     {
         return new self($inAddr);
+    }
+
+    public static function fromByteArray(array $byteArray): self
+    {
+        if (!ByteArray::isByteArray($byteArray) || count($byteArray) !== IPFamily::OCTET_IPv6) {
+            throw InvalidIPv6ArgumentException::invalidByteArray($byteArray);
+        }
+
+        return new self(ByteArray::toInAddr($byteArray));
     }
 
     private string $inAddr;

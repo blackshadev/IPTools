@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Littledev\IPTools\Address;
 use Littledev\IPTools\IPFamily;
-use Littledev\IPTools\Errors\InvalidAddressArgumentException;
+use Littledev\IPTools\Error\InvalidAddressArgumentException;
 
 class AddressSpecTest extends TestCase
 {
@@ -24,10 +24,32 @@ class AddressSpecTest extends TestCase
         Address::parse('2001:db8::42/64');
     }
 
-    public function testItThrowsOnGarbage()
+    public function testItThrowsOnInvalidParseInput()
     {
         $this->expectException(InvalidAddressArgumentException::class);
         Address::parse('nope');
+    }
+
+    /**
+     * @dataProvider  validByteArrayProvider
+     */
+    public function testItParsesByteArray($byteArray, $family)
+    {
+        $addr = Address::byteArray($byteArray);
+        self::assertEquals($byteArray, $addr->byteArray());
+        self::assertEquals($family, $addr->version());
+    }
+
+    public function testItThrowsOnInvalidByteArray()
+    {
+        $this->expectException(InvalidAddressArgumentException::class);
+        Address::byteArray([]);
+    }
+
+    public function validByteArrayProvider(): Generator
+    {
+        yield [ [127, 0  , 0  , 1  ], IPFamily::IPv4];
+        yield [ [127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127], IPFamily::IPv6];
     }
 
     public function validIPsProviders(): Generator

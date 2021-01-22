@@ -1,8 +1,10 @@
 <?php
 
 
-namespace Littledev\IPTools\Errors;
+namespace Littledev\IPTools\Error;
 
+
+use Littledev\IPTools\IPFamily;
 
 class InvalidIPv4ArgumentException extends InvalidArgumentException
 {
@@ -11,9 +13,9 @@ class InvalidIPv4ArgumentException extends InvalidArgumentException
         return new self("Invalid IPv4 address: " . $address);
     }
 
-    public static function invalidByteArray(array $array): self
+    public static function invalidByteArray(array $byteArray)
     {
-        return new self("Invalid byte array");
+        return new self(sprintf("Invalid byte array, it must be %d long, got %d", IPFamily::OCTET_IPv4, count($byteArray)));
     }
 
     public static function binary(string $binaryString)

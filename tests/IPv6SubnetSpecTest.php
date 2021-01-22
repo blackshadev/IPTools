@@ -5,7 +5,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
 use Littledev\IPTools\Subnet\IPv6Subnet;
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 
 class IPv6SubnetSpecTest extends TestCase
 {

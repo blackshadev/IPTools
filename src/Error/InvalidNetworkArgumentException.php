@@ -1,6 +1,6 @@
 <?php
 
-namespace Littledev\IPTools\Errors;
+namespace Littledev\IPTools\Error;
 
 class InvalidNetworkArgumentException extends InvalidArgumentException
 {

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Littledev\IPTools\Helpers;
+namespace Littledev\IPTools\Helper;
 
 
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 
 class Prefix
 {
