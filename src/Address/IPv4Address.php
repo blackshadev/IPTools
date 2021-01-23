@@ -68,7 +68,7 @@ class IPv4Address implements AddressInterface
 
     public function subnet(): SubnetInterface
     {
-        return IPv4Subnet::fromPrefix(SubnetInterface::MAX_IPv4);
+        return IPv4Subnet::fromPrefix(IPFamily::MAX_PREFIX_IPv4);
     }
 
     public function reversePointer(): string

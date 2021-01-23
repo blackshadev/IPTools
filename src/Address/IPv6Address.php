@@ -71,7 +71,7 @@ class IPv6Address implements AddressInterface
 
     public function subnet(): SubnetInterface
     {
-        return IPv6Subnet::fromPrefix(SubnetInterface::MAX_IPv6);
+        return IPv6Subnet::fromPrefix(IPFamily::MAX_PREFIX_IPv6);
     }
 
     public function reversePointer(): string

@@ -8,6 +8,7 @@ use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv6Address;
 use Littledev\IPTools\Helper\Prefix;
 use Littledev\IPTools\AddressableInterface;
+use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 
@@ -22,7 +23,7 @@ class IPv6Network implements NetworkInterface
         $arr = explode('/', $cidr);
 
         $ip = $arr[0];
-        $prefix = Prefix::prefixAsInt($arr[1] ?? null, SubnetInterface::MAX_IPv6);
+        $prefix = Prefix::prefixAsInt($arr[1] ?? null, IPFamily::MAX_PREFIX_IPv6);
 
         return new self(
             IPv6Address::parse($ip),

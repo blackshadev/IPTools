@@ -10,4 +10,7 @@ interface IPFamily
 
     public const OCTET_IPv4 = 4;
     public const OCTET_IPv6 = 16;
+
+    public const MAX_PREFIX_IPv4 = 32;
+    public const MAX_PREFIX_IPv6 = 128;
 }
