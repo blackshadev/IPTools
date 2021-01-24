@@ -24,6 +24,7 @@
         "@unwrap": true,
         "@zero_iteration": true,
         "@extensions": true,
-        "@default": true
+        "@default": true,
+        "MBString": false
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Errors;
 
 class InvalidNetworkArgumentException extends InvalidArgumentException
@@ -8,5 +10,4 @@ class InvalidNetworkArgumentException extends InvalidArgumentException
     {
         return new self('Invalid CIDR given ' . $cidr);
     }
-
 }

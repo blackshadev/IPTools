@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
-
 use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
-use Littledev\IPTools\Subnet\IPv4Subnet;
 
+use Littledev\IPTools\Subnet\IPv4Subnet;
+use PHPUnit\Framework\TestCase;
 
 class IPv4SubnetSpecTest extends TestCase
 {
@@ -20,7 +19,6 @@ class IPv4SubnetSpecTest extends TestCase
         self::assertEquals($prefix, $sub->prefix());
         self::assertEquals($string, (string)$sub);
         self::assertEquals($byteArray, $sub->byteArray());
-
     }
 
     public function testItErrorsOnToBigPrefix()
@@ -39,8 +37,8 @@ class IPv4SubnetSpecTest extends TestCase
     {
         return [
             [32, '255.255.255.255', [255, 255, 255, 255]],
-            [24, '255.255.255.0'  , [255, 255, 255, 0  ]],
-            [0 , '0.0.0.0'        , [0  , 0  , 0  , 0  ]],
+            [24, '255.255.255.0', [255, 255, 255, 0  ]],
+            [0, '0.0.0.0', [0, 0, 0, 0  ]],
             [30, '255.255.255.252', [255, 255, 255, 252]],
         ];
     }

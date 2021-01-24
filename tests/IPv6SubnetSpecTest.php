@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
+use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
 use Littledev\IPTools\Subnet\IPv6Subnet;
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use PHPUnit\Framework\TestCase;
 
 class IPv6SubnetSpecTest extends TestCase
 {
@@ -19,7 +19,6 @@ class IPv6SubnetSpecTest extends TestCase
         self::assertEquals($prefix, $sub->prefix());
         self::assertEquals($string, (string)$sub);
         self::assertEquals($byteArray, $sub->byteArray());
-
     }
 
     public function testItErrorsOnToBigPrefix()
@@ -44,19 +43,19 @@ class IPv6SubnetSpecTest extends TestCase
             ], [
                 64,
                 'ffff:ffff:ffff:ffff::',
-                [255, 255, 255, 255, 255, 255, 255, 255, 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ]
+                [255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0  ]
             ], [
                 42,
                     'ffff:ffff:ffc0::',
-                [255, 255, 255, 255, 255, 192, 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ]
+                [255, 255, 255, 255, 255, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  ]
             ], [
                 109,
                 'ffff:ffff:ffff:ffff:ffff:ffff:fff8:0',
-                [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 248, 0  , 0  ]
+                [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 248, 0, 0  ]
             ], [
                 0,
                 '::',
-                [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ]
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  ]
             ]
 
         ];

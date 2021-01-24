@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 
 namespace Littledev\IPTools\Errors;
-
 
 class InvalidIPv4ArgumentException extends InvalidArgumentException
 {
@@ -15,5 +16,4 @@ class InvalidIPv4ArgumentException extends InvalidArgumentException
     {
         return new self("Invalid binary string, must be 32 long: " . $binaryString);
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Errors;
 
 class InvalidAddressArgumentException extends InvalidArgumentException
@@ -8,5 +10,4 @@ class InvalidAddressArgumentException extends InvalidArgumentException
     {
         return new self('Invalid address given ' . $cidr);
     }
-
 }

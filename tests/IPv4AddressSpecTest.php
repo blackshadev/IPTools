@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
+use Littledev\IPTools\Address\IPv4Address;
 
 use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
-use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\IPFamily;
+use PHPUnit\Framework\TestCase;
 
 class IPv4AddressSpecTest extends TestCase
 {
-
     public function testItParsesIPv4(): void
     {
         $value = '127.1.9.254';
@@ -18,7 +17,7 @@ class IPv4AddressSpecTest extends TestCase
         self::assertEquals($value, (string)$ip);
         self::assertEquals(IPFamily::IPv4, $ip->version());
         self::assertEquals('254.9.1.127.in-addr.arpa', $ip->reversePointer());
-        self::assertEquals([127,1,9,254], $ip->byteArray());
+        self::assertEquals([127, 1, 9, 254], $ip->byteArray());
         self::assertEquals(inet_pton($value), $ip->inAddr());
     }
 

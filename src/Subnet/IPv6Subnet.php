@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Subnet;
 
 use Littledev\IPTools\Address\IPv6Address;
@@ -8,6 +10,19 @@ use Littledev\IPTools\IPFamily;
 
 class IPv6Subnet implements SubnetInterface
 {
+    private $prefix;
+
+    private IPv6Address $subnet;
+
+    private function __construct()
+    {
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->subnet;
+    }
+
     public static function fromPrefix(int $prefix): self
     {
         if ($prefix < 0 || $prefix > self::MAX_IPv6) {
@@ -22,12 +37,6 @@ class IPv6Subnet implements SubnetInterface
 
         return $subnet;
     }
-
-    private $prefix;
-    private IPv6Address $subnet;
-
-    private function __construct()
-    { }
 
     public function version(): string
     {
@@ -47,11 +56,6 @@ class IPv6Subnet implements SubnetInterface
     public function byteArray(): array
     {
         return $this->subnet->byteArray();
-    }
-
-    public function __toString(): string
-    {
-        return $this->subnet;
     }
 
     public function contains(SubnetInterface $subnet): bool

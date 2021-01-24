@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Helpers;
 
 class ByteArray
 {
-    const BYTE_SIZE = 8;
+    public const BYTE_SIZE = 8;
 
     public static function fromBinaryString(string $binaryString): array
     {
-        return array_map('bindec', str_split($binaryString, self::BYTE_SIZE));
+        return array_map('bindec', mb_str_split($binaryString, self::BYTE_SIZE));
     }
-
 }

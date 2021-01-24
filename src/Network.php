@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools;
 
 use Littledev\IPTools\Errors\InvalidNetworkArgumentException;

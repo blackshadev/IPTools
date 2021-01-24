@@ -1,12 +1,13 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+declare(strict_types=1);
+
 use Littledev\IPTools\Address;
-use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Errors\InvalidAddressArgumentException;
 use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
 use Littledev\IPTools\Errors\InvalidIPv6ArgumentException;
-
+use Littledev\IPTools\IPFamily;
+use PHPUnit\Framework\TestCase;
 
 class AddressSpecTest extends TestCase
 {
@@ -56,18 +57,18 @@ class AddressSpecTest extends TestCase
         self::assertEquals(IPFamily::IPv6, $ip->version());
     }
 
-     /**
-     * @dataProvider validIPv4Provider
-     */
+    /**
+    * @dataProvider validIPv4Provider
+    */
     public function testIPv6ParserFailsOnIPv4($input)
     {
         $this->expectException(InvalidIPv6ArgumentException::class);
         Address::ipv6($input);
     }
 
-     /**
-     * @dataProvider validIPv6Provider
-     */
+    /**
+    * @dataProvider validIPv6Provider
+    */
     public function testIPv4ParserFailsOnIPv6($input)
     {
         $this->expectException(InvalidIPv4ArgumentException::class);

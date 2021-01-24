@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Network;
 
-use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv4Address;
+use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Helpers\Prefix;
 use Littledev\IPTools\Subnet\IPv4Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
@@ -12,7 +14,14 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 class IPv4Network implements NetworkInterface
 {
     private IPv4Address $address;
+
     private IPv4Subnet $subnet;
+
+    private function __construct(IPv4Address $address, IPv4Subnet $subnet)
+    {
+        $this->address = $address;
+        $this->subnet = $subnet;
+    }
 
     public static function parse(string $cidr): self
     {
@@ -25,12 +34,6 @@ class IPv4Network implements NetworkInterface
             $ip,
             IPv4Subnet::fromPrefix($prefix)
         );
-    }
-
-    private function __construct(IPv4Address $address, IPv4Subnet $subnet)
-    {
-        $this->address = $address;
-        $this->subnet = $subnet;
     }
 
     public function address(): AddressInterface

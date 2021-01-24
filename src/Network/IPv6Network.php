@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 
 namespace Littledev\IPTools\Network;
 
-
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv6Address;
-use Littledev\IPTools\Helpers\Prefix;
 use Littledev\IPTools\AddressableInterface;
+use Littledev\IPTools\Helpers\Prefix;
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 
@@ -16,6 +17,12 @@ class IPv6Network implements NetworkInterface
     private IPv6Address $address;
 
     private IPv6Subnet $subnet;
+
+    private function __construct(IPv6Address $address, IPv6Subnet $subnet)
+    {
+        $this->address = $address;
+        $this->subnet = $subnet;
+    }
 
     public static function parse(string $cidr): self
     {
@@ -28,12 +35,6 @@ class IPv6Network implements NetworkInterface
             $ip,
             IPv6Subnet::fromPrefix($prefix)
         );
-    }
-
-    private function __construct(IPv6Address $address, IPv6Subnet $subnet)
-    {
-        $this->address = $address;
-        $this->subnet = $subnet;
     }
 
     public function address(): AddressInterface
