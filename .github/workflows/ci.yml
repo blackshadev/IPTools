@@ -1,35 +1,32 @@
 name: CI
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
-    tests:
-        name: Tests ${{ matrix.php }}
-        runs-on: ubuntu-latest
+  tests:
+    name: Tests ${{ matrix.php }}
+    runs-on: ubuntu-latest
 
-        strategy:
-          matrix:
-            php: [7.4, 8.0]
-            experimental: [ false ]
-            include:
-              - php: 8.1
-                experimental: true
+    strategy:
+      matrix:
+        php: [ 7.4, 8.0 ]
+        experimental: [ false ]
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                php-version: ${{ matrix.php }}
-                coverage: xdebug
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: xdebug
 
-            - name: Install composer dependencies
-              run: composer install --prefer-dist --ignore-platform-reqs
+      - name: Install composer dependencies
+        run: composer install --prefer-dist --ignore-platform-reqs
 
-            - name: Run PHPUnit unit tests
-              run: vendor/bin/phpunit
+      - name: Run PHPUnit unit tests
+        run: vendor/bin/phpunit
 
-            - name: Run Infection mutation tests
-              run: vendor/bin/infection --threads=4 --min-covered-msi=100 -v -s
+      - name: Run Infection mutation tests
+        run: vendor/bin/infection --threads=4 --min-covered-msi=100 -v -s

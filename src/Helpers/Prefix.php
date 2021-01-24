@@ -17,7 +17,7 @@ class Prefix
 
         $int = $prefix !== null ? $prefix : $max;
         if ($int > $max) {
-            throw InvalidPrefixArgumentException::size($prefix, $max);
+            throw InvalidPrefixArgumentException::tooBig($prefix, $max);
         }
 
         return (int)$int;

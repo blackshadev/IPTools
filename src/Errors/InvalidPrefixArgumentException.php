@@ -7,13 +7,17 @@ namespace Littledev\IPTools\Errors;
 
 class InvalidPrefixArgumentException extends \InvalidArgumentException
 {
+    public const INVALID_INPUT = 'Invalid prefix %s';
+
+    public const TOO_BIG = 'Prefix to big %d, while max allowed is %d';
+
     public static function invalidInput($prefix): self
     {
-        return new self('Invalid prefix ' . $prefix);
+        return new self(sprintf('Invalid prefix %s', $prefix));
     }
 
-    public static function size($prefix, $max)
+    public static function tooBig($prefix, $max)
     {
-        return new self('Prefix to big ' . $prefix . ' max allowed ' . $max);
+        return new self(sprintf(self::TOO_BIG, $prefix, $max));
     }
 }
