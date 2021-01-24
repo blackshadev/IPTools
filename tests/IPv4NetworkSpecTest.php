@@ -23,27 +23,18 @@ class IPv4NetworkSpecTest extends TestCase
         self::assertEquals('127.0.0.255', $network->getLastIP());
     }
 
-    public function testContainsWorksWithAFullSubnet(): void
+    /**
+     * @dataProvider networkContainsDataProvider
+     */
+    public function testContainsWorks($cidr, $includedAddresses, $excludedAddresses): void
     {
-        $network = IPv4Network::parse('127.0.0.1/24');
-
-        self::assertTrue($network->contains(IPv4Address::parse('127.0.0.1')));
-        self::assertTrue($network->contains(IPv4Address::parse('127.0.0.127')));
-        self::assertFalse($network->contains(IPv4Address::parse('127.0.1.0')));
-
-        self::assertFalse($network->contains(IPv4Address::parse('8.8.8.8')));
-    }
-
-    public function testContainsWorksWithAHalfSubnet(): void
-    {
-        $network = IPv4Network::parse('8.8.8.8/20');
-
-        self::assertTrue($network->contains(IPv4Address::parse('8.8.0.0')));
-        self::assertTrue($network->contains(IPv4Address::parse('8.8.8.128')));
-        self::assertTrue($network->contains(IPv4Address::parse('8.8.11.128')));
-        self::assertTrue($network->contains(IPv4Address::parse('8.8.15.254')));
-
-        self::assertFalse($network->contains(IPv4Address::parse('127.0.1.0')));
+        $network = IPv4Network::parse($cidr);
+        foreach ($includedAddresses as $address) {
+            self::assertTrue($network->contains(IPv4Address::parse($address)));
+        }
+        foreach ($excludedAddresses as $address) {
+            self::assertFalse($network->contains(IPv4Address::parse($address)));
+        }
     }
 
     public function testContainsWorksWithIPv6(): void
@@ -95,5 +86,19 @@ class IPv4NetworkSpecTest extends TestCase
         $net = IPv4Network::parse('127.0.0.30/30');
         self::assertEquals('127.0.0.28', (string)$net->getFirstIP());
         self::assertEquals('127.0.0.31', (string)$net->getLastIP());
+    }
+
+    public function networkContainsDataProvider(): Generator
+    {
+        yield [
+            '127.0.0.1/24',
+            ['127.0.0.0', '127.0.0.255', '127.0.0.142'],
+            ['8.8.8.8', '127.0.1.1', '1.0.0.42'],
+        ];
+        yield [
+            '8.8.8.8/20',
+            ['8.8.8.8', '8.8.0.0', '8.8.15.255', '8.8.11.42'],
+            ['8.8.16.0', '8.7.255.255', '8.0.0.0'],
+        ];
     }
 }

@@ -27,7 +27,7 @@ class IPv6SubnetSpecTest extends TestCase
         IPv6Subnet::fromPrefix(129);
     }
 
-    public function testItErrorsToNegativePrefix()
+    public function testItErrorsOnNegativePrefix()
     {
         $this->expectException(InvalidPrefixArgumentException::class);
         IPv6Subnet::fromPrefix(-1);
@@ -52,7 +52,12 @@ class IPv6SubnetSpecTest extends TestCase
                 109,
                 'ffff:ffff:ffff:ffff:ffff:ffff:fff8:0',
                 [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 248, 0, 0  ]
+            ], [
+                0,
+                '::',
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  ]
             ]
+
         ];
     }
 }

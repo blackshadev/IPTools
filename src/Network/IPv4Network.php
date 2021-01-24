@@ -27,11 +27,11 @@ class IPv4Network implements NetworkInterface
     {
         $arr = explode('/', $cidr);
 
-        $ip = $arr[0];
+        $ip = IPv4Address::parse($arr[0]);
         $prefix = Prefix::prefixAsInt($arr[1] ?? null, SubnetInterface::MAX_IPv4);
 
         return new self(
-            IPv4Address::parse($ip),
+            $ip,
             IPv4Subnet::fromPrefix($prefix)
         );
     }

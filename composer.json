@@ -1,25 +1,26 @@
 {
-    "name": "littledevnl/iptools",
-    "description": "Small package for handling things with IPs and networks",
-    "type": "library",
-    "license": "MIT",
     "authors": [
         {
             "name": "Vincent Hagen",
             "email": "littledev@script4web.nl"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Littledev\\IPTools\\": "src/"
+        }
+    },
+    "description": "Small package for handling things with IPs and networks",
+    "license": "MIT",
     "minimum-stability": "stable",
+    "name": "littledevnl/iptools",
     "require": {
         "php": "^7.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "symplify/easy-coding-standard": "^9.0"
+        "symplify/easy-coding-standard": "^9.0",
+        "infection/infection": "^0.20.2"
     },
-    "autoload": {
-        "psr-4": {
-            "Littledev\\IPTools\\": "src/"
-        }
-    }
+    "type": "library"
 }

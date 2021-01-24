@@ -3,3 +3,4 @@ vendor/
 node_modules/
 yarn-error.log
 .phpunit.result.cache
+infection.log

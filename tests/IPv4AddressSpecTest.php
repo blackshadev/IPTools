@@ -44,4 +44,22 @@ class IPv4AddressSpecTest extends TestCase
         $this->expectException(InvalidIPv4ArgumentException::class);
         IPv4Address::parse('127.0.0');
     }
+
+    public function testItParsesBinaryString(): void
+    {
+        $ip = IPv4Address::fromBinary('10101010101010101010101010101010');
+        self::assertEquals('170.170.170.170', (string)$ip);
+    }
+
+    public function testItThrowsOnTooShortBinaryString(): void
+    {
+        $this->expectException(InvalidIPv4ArgumentException::class);
+        IPv4Address::fromBinary('1010101010101010');
+    }
+
+    public function testItThrowsOnInvalidBinaryString(): void
+    {
+        $this->expectException(InvalidIPv4ArgumentException::class);
+        IPv4Address::fromBinary('deadbeefcafe');
+    }
 }
