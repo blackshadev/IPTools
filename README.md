@@ -1,5 +1,8 @@
 # IPTools
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![CI][ico-actions]][link-actions]
+
 This package is a set of tools for working with IP addresses and networks. 
 
 A lot of the internals are inspired by S1lentium/IPTools, but when using that package I noticed I started by 
@@ -66,3 +69,9 @@ use Littledev\IPTools\IPFamily;
 $net = Network::parse('2001:db8::/64');
 $numbersOfAddresses =  bcpow('2', (string)(IPFamily::MAX_PREFIX_IPV6 - $net->subnet()->prefix()));
 ``` 
+
+[ico-version]: https://img.shields.io/packagist/v/littledevnl/iptools.svg?style=flat-square
+[ico-actions]: https://img.shields.io/github/workflow/status/blackshadev/iptools/CI?label=CI%2FCD&style=flat-square
+
+[link-actions]: https://github.com/blackshadev/iptools/actions?query=workflow%3ACI%2FCD
+[link-packagist]: https://packagist.org/packages/littledevnl/iptools
