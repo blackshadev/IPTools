@@ -7,7 +7,8 @@ namespace Littledev\IPTools\Network;
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\AddressableInterface;
-use Littledev\IPTools\Helpers\Prefix;
+use Littledev\IPTools\Helper\Prefix;
+use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Subnet\IPv4Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 
@@ -28,7 +29,7 @@ class IPv4Network implements NetworkInterface
         $arr = explode('/', $cidr);
 
         $ip = IPv4Address::parse($arr[0]);
-        $prefix = Prefix::prefixAsInt($arr[1] ?? null, SubnetInterface::MAX_IPv4);
+        $prefix = Prefix::prefixAsInt($arr[1] ?? null, IPFamily::MAX_PREFIX_IPv4);
 
         return new self(
             $ip,

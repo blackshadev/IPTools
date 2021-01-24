@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Littledev\IPTools\Errors;
+namespace Littledev\IPTools\Error;
 
 class InvalidNetworkArgumentException extends InvalidArgumentException
 {

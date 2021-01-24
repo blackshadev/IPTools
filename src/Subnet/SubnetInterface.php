@@ -6,12 +6,6 @@ namespace Littledev\IPTools\Subnet;
 
 interface SubnetInterface
 {
-    public const MAX_IPv4 = 32;
-
-    public const MAX_IPv6 = 128;
-
-    public function __toString(): string;
-
     public function version(): string;
 
     public function prefix(): int;

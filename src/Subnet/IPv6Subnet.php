@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Littledev\IPTools\Subnet;
 
 use Littledev\IPTools\Address\IPv6Address;
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 use Littledev\IPTools\IPFamily;
 
 class IPv6Subnet implements SubnetInterface
@@ -25,14 +25,14 @@ class IPv6Subnet implements SubnetInterface
 
     public static function fromPrefix(int $prefix): self
     {
-        if ($prefix < 0 || $prefix > self::MAX_IPv6) {
+        if ($prefix < 0 || $prefix > IPFamily::MAX_PREFIX_IPv6) {
             throw InvalidPrefixArgumentException::invalidInput($prefix);
         }
 
         $subnet = new self();
         $subnet->prefix = $prefix;
 
-        $binIP = str_repeat('1', $prefix) . str_repeat('0', self::MAX_IPv6 - $prefix);
+        $binIP = str_repeat('1', $prefix) . str_repeat('0', IPFamily::MAX_PREFIX_IPv6 - $prefix);
         $subnet->subnet = IPv6Address::fromBinary($binIP);
 
         return $subnet;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Address\IPv6Address;
 
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 use Littledev\IPTools\Network\IPv4Network;
 use Littledev\IPTools\Network\IPv6Network;
 use PHPUnit\Framework\TestCase;

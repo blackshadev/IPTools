@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Address;
 
-use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
-use Littledev\IPTools\Helpers\ByteArray;
+use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
+use Littledev\IPTools\Helper\ByteArray;
 use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Subnet\IPv4Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
@@ -30,12 +30,7 @@ class IPv4Address implements AddressInterface
             throw InvalidIPv4ArgumentException::binary($binaryString);
         }
 
-        $inAddr = '';
-        foreach (ByteArray::fromBinaryString($binaryString) as $byte) {
-            $inAddr .= pack('C*', $byte);
-        }
-
-        return new self($inAddr);
+        return self::fromByteArray(ByteArray::fromBinaryString($binaryString));
     }
 
     public static function fromInAddr(string $inAddr)
@@ -57,6 +52,15 @@ class IPv4Address implements AddressInterface
         return filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
     }
 
+    public static function fromByteArray(array $byteArray): self
+    {
+        if (!ByteArray::isByteArray($byteArray) || count($byteArray) !== IPFamily::OCTET_IPv4) {
+            throw InvalidIPv4ArgumentException::invalidByteArray($byteArray);
+        }
+
+        return new self(ByteArray::toInAddr($byteArray));
+    }
+
     public function version(): string
     {
         return IPFamily::IPv4;
@@ -69,7 +73,7 @@ class IPv4Address implements AddressInterface
 
     public function subnet(): SubnetInterface
     {
-        return IPv4Subnet::fromPrefix(SubnetInterface::MAX_IPv4);
+        return IPv4Subnet::fromPrefix(IPFamily::MAX_PREFIX_IPv4);
     }
 
     public function reversePointer(): string

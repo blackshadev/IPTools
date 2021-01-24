@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use PHPUnit\Framework\TestCase;

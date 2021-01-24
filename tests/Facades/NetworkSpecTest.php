@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
-use Littledev\IPTools\Errors\InvalidIPv6ArgumentException;
-use Littledev\IPTools\Errors\InvalidNetworkArgumentException;
+use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
+use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
+use Littledev\IPTools\Error\InvalidNetworkArgumentException;
 use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Network;
 use PHPUnit\Framework\TestCase;

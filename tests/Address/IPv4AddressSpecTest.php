@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Littledev\IPTools\Address\IPv4Address;
 
-use Littledev\IPTools\Errors\InvalidIPv4ArgumentException;
+use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
 use Littledev\IPTools\IPFamily;
 use PHPUnit\Framework\TestCase;
 
@@ -54,12 +54,39 @@ class IPv4AddressSpecTest extends TestCase
     public function testItThrowsOnTooShortBinaryString(): void
     {
         $this->expectException(InvalidIPv4ArgumentException::class);
+        $this->expectExceptionMessage(sprintf(InvalidIPv4ArgumentException::BINARY, '1010101010101010'));
         IPv4Address::fromBinary('1010101010101010');
     }
 
     public function testItThrowsOnInvalidBinaryString(): void
     {
         $this->expectException(InvalidIPv4ArgumentException::class);
+        $this->expectExceptionMessage(sprintf(InvalidIPv4ArgumentException::BINARY, 'deadbeefcafe'));
         IPv4Address::fromBinary('deadbeefcafe');
+    }
+
+    public function testItParsesByteArray(): void
+    {
+        $input = [127, 0, 0, 1];
+        $ip = IPv4Address::fromByteArray($input);
+        self::assertEquals($input, $ip->byteArray());
+    }
+
+    /** @dataProvider invalidByteArrayProvider */
+    public function testItThrowsOnInvalidByteArray($byteArray): void
+    {
+        $this->expectException(InvalidIPv4ArgumentException::class);
+        IPv4Address::fromByteArray($byteArray);
+    }
+
+    public function invalidByteArrayProvider(): Generator
+    {
+        yield [ [] ];
+        yield [ ['a', 0, 0, 1] ];
+        yield [ [256, 0, 0, 1] ];
+        yield [ [127, 0, 0, -1] ];
+        yield [ [127, 0, 0, 1, 1] ];
+        yield [ [127, 0, 0] ];
+        yield [ [127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127] ];
     }
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
-use Littledev\IPTools\Helpers\Prefix;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
+use Littledev\IPTools\Helper\Prefix;
 use PHPUnit\Framework\TestCase;
 
-class PrefixHelperTest extends TestCase
+class PrefixTest extends TestCase
 {
     public function testItErrorsOnToBigPrefix()
     {

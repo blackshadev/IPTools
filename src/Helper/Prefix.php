@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
+namespace Littledev\IPTools\Helper;
 
-namespace Littledev\IPTools\Helpers;
-
-use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
+use Littledev\IPTools\Error\InvalidPrefixArgumentException;
 
 class Prefix
 {
