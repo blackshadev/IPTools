@@ -1,9 +1,11 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+declare(strict_types=1);
+
 use Littledev\IPTools\Address;
-use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Errors\InvalidAddressArgumentException;
+use Littledev\IPTools\IPFamily;
+use PHPUnit\Framework\TestCase;
 
 class AddressSpecTest extends TestCase
 {

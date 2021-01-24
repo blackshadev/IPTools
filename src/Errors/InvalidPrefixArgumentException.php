@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 
 namespace Littledev\IPTools\Errors;
 
@@ -12,6 +14,6 @@ class InvalidPrefixArgumentException extends \InvalidArgumentException
 
     public static function size(int $prefix, int $max)
     {
-        return new self('Prefix to big ' . $prefix . ' max allowed ' . $max );
+        return new self('Prefix to big ' . $prefix . ' max allowed ' . $max);
     }
 }

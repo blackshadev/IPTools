@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Subnet;
 
 use Littledev\IPTools\Address\IPv4Address;
@@ -8,6 +10,19 @@ use Littledev\IPTools\IPFamily;
 
 class IPv4Subnet implements SubnetInterface
 {
+    private $prefix;
+
+    private IPv4Address $subnet;
+
+    private function __construct()
+    {
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->subnet;
+    }
+
     public static function fromPrefix(int $prefix): self
     {
         if ($prefix < 0 || $prefix > self::MAX_IPv4) {
@@ -22,12 +37,6 @@ class IPv4Subnet implements SubnetInterface
         return $subnet;
     }
 
-    private $prefix;
-    private IPv4Address $subnet;
-
-    private function __construct()
-    { }
-
     public function version(): string
     {
         return IPFamily::IPv4;
@@ -36,11 +45,6 @@ class IPv4Subnet implements SubnetInterface
     public function prefix(): int
     {
         return $this->prefix;
-    }
-
-    public function __toString(): string
-    {
-        return (string)$this->subnet;
     }
 
     public function inAddr(): string

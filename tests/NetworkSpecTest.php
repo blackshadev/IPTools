@@ -1,9 +1,11 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Littledev\IPTools\Network;
-use Littledev\IPTools\IPFamily;
+declare(strict_types=1);
+
 use Littledev\IPTools\Errors\InvalidNetworkArgumentException;
+use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Network;
+use PHPUnit\Framework\TestCase;
 
 class NetworkSpecTest extends TestCase
 {

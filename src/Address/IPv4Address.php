@@ -12,18 +12,30 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv4Address implements AddressInterface
 {
+    private string $address;
+
+    private function __construct(string $inAddr)
+    {
+        $this->address = $inAddr;
+    }
+
+    public function __toString(): string
+    {
+        return inet_ntop($this->inAddr());
+    }
+
     public static function fromBinary(string $binaryString)
     {
-        if(!preg_match('/^[01]{32}$/', $binaryString)) {
+        if (!preg_match('/^[01]{32}$/', $binaryString)) {
             throw InvalidIPv4ArgumentException::binary($binaryString);
         }
 
         $inAddr = '';
-		foreach (ByteArray::fromBinaryString($binaryString) as $byte) {
-			$inAddr .= pack('C*', $byte);
-		}
+        foreach (ByteArray::fromBinaryString($binaryString) as $byte) {
+            $inAddr .= pack('C*', $byte);
+        }
 
-		return new self($inAddr);
+        return new self($inAddr);
     }
 
     public static function fromInAddr(string $inAddr)
@@ -43,13 +55,6 @@ class IPv4Address implements AddressInterface
     public static function isValid(string $address): bool
     {
         return filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
-    }
-
-    private string $address;
-
-    private function __construct(string $inAddr)
-    {
-        $this->address = $inAddr;
     }
 
     public function version(): string
@@ -81,10 +86,5 @@ class IPv4Address implements AddressInterface
     public function byteArray(): array
     {
         return array_values(unpack('C*', $this->address));
-    }
-
-    public function __toString(): string
-    {
-        return inet_ntop($this->inAddr());
     }
 }

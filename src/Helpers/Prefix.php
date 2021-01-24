@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 
 namespace Littledev\IPTools\Helpers;
-
 
 use Littledev\IPTools\Errors\InvalidPrefixArgumentException;
 
@@ -14,12 +15,11 @@ class Prefix
             throw InvalidPrefixArgumentException::invalidInput($prefix);
         }
 
-        $int = $prefix != null ? ((int)$prefix) :  $max;
-        if($int > $max) {
+        $int = $prefix !== null ? ((int)$prefix) : $max;
+        if ($int > $max) {
             throw InvalidPrefixArgumentException::size($prefix, $max);
         }
 
         return $int;
     }
-
 }
