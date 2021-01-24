@@ -12,13 +12,25 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv4Address implements AddressInterface
 {
+    private string $address;
+
+    private function __construct(string $inAddr)
+    {
+        $this->address = $inAddr;
+    }
+
+    public function __toString(): string
+    {
+        return inet_ntop($this->inAddr());
+    }
+
     public static function fromBinary(string $binaryString)
     {
-        if(!preg_match('/^[01]{32}$/', $binaryString)) {
+        if (!preg_match('/^[01]{32}$/', $binaryString)) {
             throw InvalidIPv4ArgumentException::binary($binaryString);
         }
 
-		return self::fromByteArray(ByteArray::fromBinaryString($binaryString));
+        return self::fromByteArray(ByteArray::fromBinaryString($binaryString));
     }
 
     public static function fromInAddr(string $inAddr)
@@ -47,13 +59,6 @@ class IPv4Address implements AddressInterface
         }
 
         return new self(ByteArray::toInAddr($byteArray));
-    }
-
-    private string $address;
-
-    private function __construct(string $inAddr)
-    {
-        $this->address = $inAddr;
     }
 
     public function version(): string
@@ -85,10 +90,5 @@ class IPv4Address implements AddressInterface
     public function byteArray(): array
     {
         return array_values(unpack('C*', $this->address));
-    }
-
-    public function __toString(): string
-    {
-        return inet_ntop($this->inAddr());
     }
 }
