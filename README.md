@@ -17,6 +17,7 @@ The state is pretty alpha at this point but feel free to use it. I do my best to
 use Littledev\IPTools\Address;
 use Littledev\IPTools\Network;
 use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Iterator\AddressIterator;
 
 $ip = Address::parse($_SERVER['REMOTE_ADDR']);
 if ($ip->version() === IPFamily::IPv6) {
@@ -32,6 +33,11 @@ $localNetwork = Network::parse('127.0.0.1/24');
 if ($localNetwork->contains($ip)) {
     echo 'No place like localhost.';
 }
+
+$iterator = new AddressIterator($localNetwork);
+foreach ($iterator as $address) {
+    echo 'In local network: ' . $address;
+}
 ```
 
 ## Goals
@@ -39,6 +45,12 @@ if ($localNetwork->contains($ip)) {
 - No dependencies.
 - A set of tools for parsing and working with IP addresses and networks
 - Utility classes should be open for extension through a common parent 
+
+## Changelog
+
+- [v0.1] Parsing of IP addresses and networks. 
+- [v0.2] `constains` now accepts networks and addresses. Generalized 
+- [v0.3] Network Iterators 
 
 ## Limitations
 
