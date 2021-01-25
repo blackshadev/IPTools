@@ -4,9 +4,12 @@ use \PHPUnit\Framework\TestCase;
 use Littledev\IPTools\Operator\NextIPOperator;
 use Littledev\IPTools\Address;
 
-class NextIPOperatorTest extends TestCase {
-
-    protected NextIPOperator $operator;
+class NextIPOperatorTest extends TestCase
+{
+    /**
+     * @var NextIPOperator
+     */
+    protected $operator;
 
     protected function setUp(): void
     {
