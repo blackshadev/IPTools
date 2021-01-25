@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Address;
 
+use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
 use Littledev\IPTools\Helper\ByteArray;
 use Littledev\IPTools\IPFamily;
@@ -12,7 +13,10 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv6Address implements AddressInterface
 {
-    private string $inAddr;
+    /**
+     * @var string
+     */
+    private $inAddr;
 
     private function __construct(string $inAddr)
     {
@@ -84,7 +88,7 @@ class IPv6Address implements AddressInterface
     public function reversePointer(): string
     {
         $unpacked = unpack('H*hex', $this->inAddr);
-        $reverseArray = array_reverse(mb_str_split($unpacked['hex']));
+        $reverseArray = array_reverse(str_split($unpacked['hex']));
         return implode('.', $reverseArray) . '.ip6.arpa';
     }
 
@@ -96,5 +100,12 @@ class IPv6Address implements AddressInterface
     public function byteArray(): array
     {
         return array_values(unpack('C*', $this->inAddr));
+    }
+
+    public function contains(AddressableInterface $addressable): bool
+    {
+        return $addressable->address()->version() === IPFamily::IPv6
+            && $addressable->address()->inAddr() === $this->inAddr()
+            && $addressable->subnet()->prefix() === $this->subnet()->prefix();
     }
 }

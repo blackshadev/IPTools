@@ -15,9 +15,15 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv6Network implements NetworkInterface
 {
-    private IPv6Address $address;
+    /**
+     * @var IPv6Address
+     */
+    private $address;
 
-    private IPv6Subnet $subnet;
+    /**
+     * @var IPv6Subnet
+     */
+    private $subnet;
 
     private function __construct(IPv6Address $address, IPv6Subnet $subnet)
     {

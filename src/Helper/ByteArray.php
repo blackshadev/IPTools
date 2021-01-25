@@ -10,7 +10,7 @@ class ByteArray
 
     public static function isByteArray(array $arr)
     {
-        return Arr::all($arr, fn ($i) => is_int($i) && $i >= 0 && $i <= 255);
+        return Arr::all($arr, function ($i) {return is_int($i) && $i >= 0 && $i <= 255;});
     }
 
     public static function fromInAddr(string $inAddr): array
@@ -30,7 +30,7 @@ class ByteArray
 
     public static function fromBinaryString(string $binaryString): array
     {
-        return array_map('bindec', mb_str_split($binaryString, self::BYTE_SIZE));
+        return array_map('bindec', str_split($binaryString, self::BYTE_SIZE));
     }
 
     public static function addOne(array $byteArray): array

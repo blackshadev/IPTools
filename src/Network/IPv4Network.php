@@ -14,9 +14,15 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv4Network implements NetworkInterface
 {
-    private IPv4Address $address;
+    /**
+     * @var IPv4Address
+     */
+    private $address;
 
-    private IPv4Subnet $subnet;
+    /**
+     * @var IPv4Subnet
+     */
+    private $subnet;
 
     private function __construct(IPv4Address $address, IPv4Subnet $subnet)
     {

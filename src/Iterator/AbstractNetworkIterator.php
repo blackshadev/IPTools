@@ -8,9 +8,15 @@ use Littledev\IPTools\Network\NetworkInterface;
 
 abstract class AbstractNetworkIterator implements NetworkIteratorInterface
 {
+    /**
+     * @var NetworkInterface
+     */
+    protected $network;
 
-    protected NetworkInterface $network;
-    protected AddressInterface $current;
+    /**
+     * @var AddressInterface
+     */
+    protected $current;
 
     public function __construct(NetworkInterface $network)
     {

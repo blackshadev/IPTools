@@ -10,7 +10,7 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 
 interface NetworkInterface extends AddressableInterface
 {
-    public static function parse(string $network): self;
+    public static function parse(string $network);
 
     public function address(): AddressInterface;
 

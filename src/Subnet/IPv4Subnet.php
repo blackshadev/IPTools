@@ -12,7 +12,10 @@ class IPv4Subnet implements SubnetInterface
 {
     private $prefix;
 
-    private IPv4Address $subnet;
+    /**
+     * @var IPv4Address
+     */
+    private $subnet;
 
     private function __construct()
     {

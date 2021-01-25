@@ -12,7 +12,10 @@ class IPv6Subnet implements SubnetInterface
 {
     private $prefix;
 
-    private IPv6Address $subnet;
+    /**
+     * @var IPv6Subnet
+     */
+    private $subnet;
 
     private function __construct()
     {

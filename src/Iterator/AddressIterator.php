@@ -8,7 +8,10 @@ use Littledev\IPTools\Operator\OperatorInterface;
 
 class AddressIterator extends AbstractNetworkIterator
 {
-    private OperatorInterface $nextOperator;
+    /**
+     * @var OperatorInterface
+     */
+    private $nextOperator;
 
     public function __construct(NetworkInterface $network)
     {
