@@ -12,7 +12,7 @@ class ArrTest extends TestCase
      */
     public function testItArrAll($arr, $expected)
     {
-        $output = Arr::all($arr, fn ($i) => $i);
+        $output = Arr::all($arr, function ($i) {return $i;});
         self::assertEquals($expected, $output);
     }
 
