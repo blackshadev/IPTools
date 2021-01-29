@@ -24,6 +24,11 @@ class IPv4Network implements NetworkInterface
         $this->subnet = $subnet;
     }
 
+    public function __toString()
+    {
+        return $this->address . '/' . $this->subnet->prefix();
+    }
+
     public static function parse(string $cidr): self
     {
         $arr = explode('/', $cidr);
