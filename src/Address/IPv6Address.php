@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Address;
 
+use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
 use Littledev\IPTools\Helper\ByteArray;
 use Littledev\IPTools\IPFamily;
@@ -96,5 +97,10 @@ class IPv6Address implements AddressInterface
     public function byteArray(): array
     {
         return array_values(unpack('C*', $this->inAddr));
+    }
+
+    public function contains(AddressableInterface $address): bool
+    {
+        return $this->inAddr === $address->address()->inAddr();
     }
 }

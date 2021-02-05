@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Address\IPv6Address;
 use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
 use Littledev\IPTools\IPFamily;
@@ -50,6 +51,14 @@ class IPv6AddressSpecTest extends TestCase
     {
         $this->expectException(InvalidIPv6ArgumentException::class);
         IPv6Address::fromBinary('deadbeefcafe');
+    }
+
+    public function testItContains(): void
+    {
+        $addr = IPv6Address::parse('2001:db8::');
+        self::assertTrue($addr->contains($addr));
+        self::assertFalse($addr->contains(IPv4Address::parse('127.0.0.1')));
+        self::assertFalse($addr->contains(IPv6Address::parse('2001:db8::1')));
     }
 
     public function invalidByteArrayProvider(): Generator

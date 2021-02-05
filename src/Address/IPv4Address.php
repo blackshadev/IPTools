@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Address;
 
+use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
 use Littledev\IPTools\Helper\ByteArray;
 use Littledev\IPTools\IPFamily;
@@ -12,11 +13,11 @@ use Littledev\IPTools\Subnet\SubnetInterface;
 
 class IPv4Address implements AddressInterface
 {
-    private string $address;
+    private string $inAddr;
 
     private function __construct(string $inAddr)
     {
-        $this->address = $inAddr;
+        $this->inAddr = $inAddr;
     }
 
     public function __toString(): string
@@ -84,11 +85,16 @@ class IPv4Address implements AddressInterface
 
     public function inAddr(): string
     {
-        return $this->address;
+        return $this->inAddr;
     }
 
     public function byteArray(): array
     {
-        return array_values(unpack('C*', $this->address));
+        return array_values(unpack('C*', $this->inAddr));
+    }
+
+    public function contains(AddressableInterface $address): bool
+    {
+        return $this->inAddr === $address->address()->inAddr();
     }
 }
