@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Error;
 
 use Littledev\IPTools\IPFamily;
@@ -22,5 +24,4 @@ class InvalidAddressArgumentException extends InvalidArgumentException
             )
         );
     }
-
 }

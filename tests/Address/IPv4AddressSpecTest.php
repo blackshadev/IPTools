@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Littledev\IPTools\Address\IPv4Address;
-
+use Littledev\IPTools\Address\IPv6Address;
 use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
 use Littledev\IPTools\IPFamily;
 use PHPUnit\Framework\TestCase;
@@ -77,6 +77,14 @@ class IPv4AddressSpecTest extends TestCase
     {
         $this->expectException(InvalidIPv4ArgumentException::class);
         IPv4Address::fromByteArray($byteArray);
+    }
+
+    public function testItContains(): void
+    {
+        $addr = IPv4Address::parse('127.0.0.1');
+        self::assertTrue($addr->contains($addr));
+        self::assertFalse($addr->contains(IPv4Address::parse('127.0.0.0')));
+        self::assertFalse($addr->contains(IPv6Address::parse('::127.0.0.0')));
     }
 
     public function invalidByteArrayProvider(): Generator
