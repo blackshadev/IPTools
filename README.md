@@ -55,6 +55,7 @@ foreach ($iterator as $address) {
 - [v0.1] Parsing of IP addresses and networks. 
 - [v0.2] `constains` now accepts networks and addresses. Generalized 
 - [v0.3] Network Iterators 
+- [v0.4] Network lists
 
 ## Limitations
 
