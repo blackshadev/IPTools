@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![CI][ico-actions]][link-actions]
-[![Infection MSI](https://badge.stryker-mutator.io/github.com/blackshadev/IPTools/master)](https://infection.github.io)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fblackshadev%2FIPTools%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/blackshadev/IPTools/master)
 
 This package is a set of tools for working with IP addresses and networks. 
 
