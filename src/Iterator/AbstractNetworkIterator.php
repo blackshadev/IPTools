@@ -1,24 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Iterator;
 
 use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Network\NetworkInterface;
+use Littledev\IPTools\Operator\NetworkOperators;
 
 abstract class AbstractNetworkIterator implements NetworkIteratorInterface
 {
-
     protected NetworkInterface $network;
+
     protected AddressInterface $current;
 
     public function __construct(NetworkInterface $network)
     {
         $this->network = $network;
-        $this->current = $network->getFirstIP();
     }
 
     abstract public function next();
+
+    abstract public function rewind();
 
     public function key()
     {
@@ -27,14 +31,8 @@ abstract class AbstractNetworkIterator implements NetworkIteratorInterface
 
     public function valid()
     {
-        return $this->network->contains($this->current);
+        return NetworkOperators::contains($this->network, $this->current);
     }
-
-    public function rewind()
-    {
-        $this->current = $this->network->getFirstIP();
-    }
-
 
     public function current(): AddressableInterface
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Error;
 
-use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Family\IPFamily;
 
 class InvalidAddressArgumentException extends InvalidArgumentException
 {
@@ -18,9 +18,21 @@ class InvalidAddressArgumentException extends InvalidArgumentException
         return new self(
             sprintf(
                 'Invalid byteArray length given. Expected %d or %d, got %d',
-                IPFamily::OCTET_IPv4,
-                IPFamily::OCTET_IPv6,
+                IPFamily::v4()->octets(),
+                IPFamily::v6()->octets(),
                 count($byteArray)
+            )
+        );
+    }
+
+    public static function invalidInAddr(string $inAddr)
+    {
+        return new self(
+            sprintf(
+                'Invalid InAddr. Expected length %d or %d, got %d',
+                IPFamily::v4()->octets(),
+                IPFamily::v6()->octets(),
+                mb_strlen($inAddr)
             )
         );
     }

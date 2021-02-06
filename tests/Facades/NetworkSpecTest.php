@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
 use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
 use Littledev\IPTools\Error\InvalidNetworkArgumentException;
-use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Family\IPFamily;
 use Littledev\IPTools\Network;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +21,7 @@ class NetworkSpecTest extends TestCase
 
         self::assertEquals($prefix, $ip->subnet()->prefix());
         self::assertEquals($address, (string)$ip->address());
-        self::assertEquals($family, $ip->address()->version());
+        self::assertEquals($family, $ip->address()->family());
     }
 
     public function testItThrowsInGarbage()
@@ -39,7 +39,7 @@ class NetworkSpecTest extends TestCase
 
         self::assertEquals($prefix, $ip->subnet()->prefix());
         self::assertEquals($address, (string)$ip->address());
-        self::assertEquals(IPFamily::IPv4, $ip->address()->version());
+        self::assertSame(IPFamily::v4(), $ip->address()->family());
     }
 
     /**
@@ -51,7 +51,7 @@ class NetworkSpecTest extends TestCase
 
         self::assertEquals($prefix, $ip->subnet()->prefix());
         self::assertEquals($address, (string)$ip->address());
-        self::assertEquals(IPFamily::IPv6, $ip->address()->version());
+        self::assertSame(IPFamily::v6(), $ip->address()->family());
     }
 
     /**
@@ -85,18 +85,18 @@ class NetworkSpecTest extends TestCase
     public function testItThrowsOnInvalidIP()
     {
         $family = Network::family('127.0.a.1/32');
-        self::assertEquals(IPFamily::Invalid, $family);
+        self::assertSame(IPFamily::invalid(), $family);
     }
 
     public function validIPv4Provider(): Generator
     {
-        yield ['127.0.0.1/24', 24, '127.0.0.1', IPFamily::IPv4];
-        yield ['127.0.0.1', 32, '127.0.0.1', IPFamily::IPv4];
+        yield ['127.0.0.1/24', 24, '127.0.0.1', IPFamily::v4()];
+        yield ['127.0.0.1', 32, '127.0.0.1', IPFamily::v4()];
     }
 
     public function validIPv6Provider(): Generator
     {
-        yield ['2001:db8::42/64', 64, '2001:db8::42', IPFamily::IPv6];
-        yield ['2001:db8::42', 128, '2001:db8::42', IPFamily::IPv6];
+        yield ['2001:db8::42/64', 64, '2001:db8::42', IPFamily::v6()];
+        yield ['2001:db8::42', 128, '2001:db8::42', IPFamily::v6()];
     }
 }

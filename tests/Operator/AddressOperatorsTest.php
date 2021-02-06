@@ -1,25 +1,19 @@
 <?php
 
-use \PHPUnit\Framework\TestCase;
-use Littledev\IPTools\Operator\NextIPOperator;
+declare(strict_types=1);
+
 use Littledev\IPTools\Address;
+use Littledev\IPTools\Operator\AddressOperators;
+use PHPUnit\Framework\TestCase;
 
-class NextIPOperatorTest extends TestCase {
-
-    protected NextIPOperator $operator;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->operator = new NextIPOperator();
-    }
-
+class AddressOperatorsTest extends TestCase
+{
     /**
      * @dataProvider nextIPDataProvider
      */
     public function testItWorks($ip, $next)
     {
-        $nextIp = $this->operator->execute(Address::parse($ip));
+        $nextIp = AddressOperators::nextIP(Address::parse($ip));
         self::assertEquals((string)$next, (string)$nextIp);
     }
 
@@ -31,6 +25,5 @@ class NextIPOperatorTest extends TestCase {
         yield [ '2001:db8::42', '2001:db8::43' ];
         yield [ '2001:db8::ff', '2001:db8::100' ];
         yield [ '2001:db8::ffff', '2001:db8::1:0' ];
-
     }
 }

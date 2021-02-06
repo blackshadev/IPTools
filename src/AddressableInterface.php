@@ -12,6 +12,4 @@ interface AddressableInterface
     public function address(): AddressInterface;
 
     public function subnet(): SubnetInterface;
-
-    public function contains(AddressableInterface $address): bool;
 }
