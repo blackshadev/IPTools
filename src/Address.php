@@ -8,6 +8,8 @@ use Littledev\IPTools\Address\AddressInterface;
 use Littledev\IPTools\Address\IPv4Address;
 use Littledev\IPTools\Address\IPv6Address;
 use Littledev\IPTools\Error\InvalidAddressArgumentException;
+use Littledev\IPTools\Family\IPFamily;
+use Littledev\IPTools\Family\IPFamilyInterface;
 
 final class Address
 {
@@ -15,11 +17,11 @@ final class Address
     {
         $family = self::family($ip);
 
-        if ($family === IPFamily::IPv4) {
+        if ($family === IPFamily::v4()) {
             return self::ipv4($ip);
         }
 
-        if ($family === IPFamily::IPv6) {
+        if ($family === IPFamily::v6()) {
             return self::ipv6($ip);
         }
 
@@ -28,11 +30,11 @@ final class Address
 
     public static function byteArray(array $byteArray): AddressInterface
     {
-        if (count($byteArray) === IPFamily::OCTET_IPv4) {
+        if (count($byteArray) === IPFamily::v4()->octets()) {
             return IPv4Address::fromByteArray($byteArray);
         }
 
-        if (count($byteArray) === IPFamily::OCTET_IPv6) {
+        if (count($byteArray) === IPFamily::v6()->octets()) {
             return IPv6Address::fromByteArray($byteArray);
         }
 
@@ -49,16 +51,29 @@ final class Address
         return IPv6Address::parse($address);
     }
 
-    public static function family(string $ip): string
+    public static function family(string $ip): IPFamilyInterface
     {
         if (IPv6Address::isValid($ip)) {
-            return IPFamily::IPv6;
+            return IPFamily::v6();
         }
 
         if (IPv4Address::isValid($ip)) {
-            return IPFamily::IPv4;
+            return IPFamily::v4();
         }
 
-        return IPFamily::Invalid;
+        return IPFamily::invalid();
+    }
+
+    public static function fromInAddr(string $inAddr)
+    {
+        if (mb_strlen($inAddr) === IPFamily::v4()->octets()) {
+            return IPv4Address::fromInAddr($inAddr);
+        }
+
+        if (mb_strlen($inAddr) === IPFamily::v6()->octets()) {
+            return IPv6Address::fromInAddr($inAddr);
+        }
+
+        throw InvalidAddressArgumentException::invalidInAddr($inAddr);
     }
 }

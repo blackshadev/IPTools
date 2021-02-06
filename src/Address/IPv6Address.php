@@ -4,27 +4,15 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Address;
 
-use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
+use Littledev\IPTools\Family\IPFamily;
+use Littledev\IPTools\Family\IPFamilyInterface;
 use Littledev\IPTools\Helper\ByteArray;
-use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Subnet\IPv6Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 
-class IPv6Address implements AddressInterface
+class IPv6Address extends AbstractIPAddress
 {
-    private string $inAddr;
-
-    private function __construct(string $inAddr)
-    {
-        $this->inAddr = $inAddr;
-    }
-
-    public function __toString(): string
-    {
-        return inet_ntop($this->inAddr);
-    }
-
     public static function isValid(string $address): bool
     {
         return filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
@@ -50,7 +38,7 @@ class IPv6Address implements AddressInterface
             throw InvalidIPv6ArgumentException::address($address);
         }
 
-        return new self(inet_pton($address));
+        return self::fromInAddr(inet_pton($address));
     }
 
     public static function fromInAddr(string $inAddr)
@@ -60,47 +48,27 @@ class IPv6Address implements AddressInterface
 
     public static function fromByteArray(array $byteArray): self
     {
-        if (!ByteArray::isByteArray($byteArray) || count($byteArray) !== IPFamily::OCTET_IPv6) {
+        if (!ByteArray::isByteArray($byteArray) || count($byteArray) !== IPFamily::v6()->octets()) {
             throw InvalidIPv6ArgumentException::invalidByteArray($byteArray);
         }
 
-        return new self(ByteArray::toInAddr($byteArray));
+        return self::fromInAddr(ByteArray::toInAddr($byteArray));
     }
 
-    public function version(): string
+    public function family(): IPFamilyInterface
     {
-        return IPFamily::IPv6;
-    }
-
-    public function address(): AddressInterface
-    {
-        return $this;
+        return IPFamily::v6();
     }
 
     public function subnet(): SubnetInterface
     {
-        return IPv6Subnet::fromPrefix(IPFamily::MAX_PREFIX_IPv6);
+        return IPv6Subnet::fromPrefix($this->family()->maxPrefix());
     }
 
     public function reversePointer(): string
     {
-        $unpacked = unpack('H*hex', $this->inAddr);
+        $unpacked = unpack('H*hex', $this->inAddr());
         $reverseArray = array_reverse(mb_str_split($unpacked['hex']));
         return implode('.', $reverseArray) . '.ip6.arpa';
-    }
-
-    public function inAddr(): string
-    {
-        return $this->inAddr;
-    }
-
-    public function byteArray(): array
-    {
-        return array_values(unpack('C*', $this->inAddr));
-    }
-
-    public function contains(AddressableInterface $address): bool
-    {
-        return $this->inAddr === $address->address()->inAddr();
     }
 }

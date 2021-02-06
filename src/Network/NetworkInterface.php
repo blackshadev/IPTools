@@ -15,10 +15,4 @@ interface NetworkInterface extends AddressableInterface
     public function address(): AddressInterface;
 
     public function subnet(): SubnetInterface;
-
-    public function contains(AddressableInterface $address): bool;
-
-    public function getLastIP(): AddressInterface;
-
-    public function getFirstIP(): AddressInterface;
 }

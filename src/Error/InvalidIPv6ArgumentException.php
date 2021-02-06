@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Error;
 
-use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Family\IPFamily;
 
 class InvalidIPv6ArgumentException extends InvalidArgumentException
 {
@@ -20,6 +20,8 @@ class InvalidIPv6ArgumentException extends InvalidArgumentException
 
     public static function invalidByteArray(array $byteArray)
     {
-        return new self(sprintf("Invalid byte array, it must be %d long, got %d", IPFamily::OCTET_IPv6, count($byteArray)));
+        return new self(
+            sprintf("Invalid byte array, it must be %d long, got %d", IPFamily::v6()->octets(), count($byteArray))
+        );
     }
 }

@@ -4,27 +4,15 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Address;
 
-use Littledev\IPTools\AddressableInterface;
 use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
+use Littledev\IPTools\Family\IPFamily;
+use Littledev\IPTools\Family\IPFamilyInterface;
 use Littledev\IPTools\Helper\ByteArray;
-use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Subnet\IPv4Subnet;
 use Littledev\IPTools\Subnet\SubnetInterface;
 
-class IPv4Address implements AddressInterface
+class IPv4Address extends AbstractIPAddress
 {
-    private string $inAddr;
-
-    private function __construct(string $inAddr)
-    {
-        $this->inAddr = $inAddr;
-    }
-
-    public function __toString(): string
-    {
-        return inet_ntop($this->inAddr());
-    }
-
     public static function fromBinary(string $binaryString)
     {
         if (!preg_match('/^[01]{32}$/', $binaryString)) {
@@ -45,7 +33,7 @@ class IPv4Address implements AddressInterface
             throw InvalidIPv4ArgumentException::address($address);
         }
 
-        return new self(inet_pton($address));
+        return self::fromInAddr(inet_pton($address));
     }
 
     public static function isValid(string $address): bool
@@ -55,26 +43,16 @@ class IPv4Address implements AddressInterface
 
     public static function fromByteArray(array $byteArray): self
     {
-        if (!ByteArray::isByteArray($byteArray) || count($byteArray) !== IPFamily::OCTET_IPv4) {
+        if (!ByteArray::isByteArray($byteArray) || count($byteArray) !== IPFamily::v4()->octets()) {
             throw InvalidIPv4ArgumentException::invalidByteArray($byteArray);
         }
 
-        return new self(ByteArray::toInAddr($byteArray));
-    }
-
-    public function version(): string
-    {
-        return IPFamily::IPv4;
-    }
-
-    public function address(): AddressInterface
-    {
-        return $this;
+        return self::fromInAddr(ByteArray::toInAddr($byteArray));
     }
 
     public function subnet(): SubnetInterface
     {
-        return IPv4Subnet::fromPrefix(IPFamily::MAX_PREFIX_IPv4);
+        return IPv4Subnet::fromPrefix($this->family()->maxPrefix());
     }
 
     public function reversePointer(): string
@@ -83,18 +61,8 @@ class IPv4Address implements AddressInterface
         return $reverseIp . '.in-addr.arpa';
     }
 
-    public function inAddr(): string
+    public function family(): IPFamilyInterface
     {
-        return $this->inAddr;
-    }
-
-    public function byteArray(): array
-    {
-        return array_values(unpack('C*', $this->inAddr));
-    }
-
-    public function contains(AddressableInterface $address): bool
-    {
-        return $this->inAddr === $address->address()->inAddr();
+        return IPFamily::v4();
     }
 }

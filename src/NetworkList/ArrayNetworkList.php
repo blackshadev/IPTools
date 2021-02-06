@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Littledev\IPTools\NetworkList;
 
 use Littledev\IPTools\AddressableInterface;
+use Littledev\IPTools\Operator\NetworkOperators;
 
 class ArrayNetworkList implements NetworkListInterface
 {
@@ -23,7 +24,7 @@ class ArrayNetworkList implements NetworkListInterface
     {
         /** @var AddressableInterface $network */
         foreach ($this->networks as $network) {
-            if ($network->contains($addressable)) {
+            if (NetworkOperators::contains($network, $addressable)) {
                 return true;
             }
         }
@@ -58,6 +59,7 @@ class ArrayNetworkList implements NetworkListInterface
 
     private function isSame(AddressableInterface $a, AddressableInterface $b): bool
     {
-        return $a->address()->inAddr() === $b->address()->inAddr() && $a->subnet()->prefix() === $b->subnet()->prefix();
+        return $a->address()->inAddr() === $b->address()->inAddr() &&
+            $a->subnet()->prefix() === $b->subnet()->prefix();
     }
 }

@@ -1,23 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Littledev\IPTools\Iterator;
 
-use Littledev\IPTools\Network\NetworkInterface;
-use Littledev\IPTools\Operator\NextIPOperator;
-use Littledev\IPTools\Operator\OperatorInterface;
+use Littledev\IPTools\Operator\AddressOperators;
+use Littledev\IPTools\Operator\NetworkOperators;
 
 class AddressIterator extends AbstractNetworkIterator
 {
-    private OperatorInterface $nextOperator;
-
-    public function __construct(NetworkInterface $network)
-    {
-        parent::__construct($network);
-        $this->nextOperator = new NextIPOperator();
-    }
-
     public function next()
     {
-        $this->current = $this->nextOperator->execute($this->current);
+        $this->current = AddressOperators::nextIP($this->current);
+    }
+
+    public function rewind()
+    {
+        $this->current = NetworkOperators::firstIP($this->network);
     }
 }

@@ -6,7 +6,7 @@ use Littledev\IPTools\Address;
 use Littledev\IPTools\Error\InvalidAddressArgumentException;
 use Littledev\IPTools\Error\InvalidIPv4ArgumentException;
 use Littledev\IPTools\Error\InvalidIPv6ArgumentException;
-use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Family\IPFamily;
 use PHPUnit\Framework\TestCase;
 
 class AddressSpecTest extends TestCase
@@ -20,7 +20,7 @@ class AddressSpecTest extends TestCase
         $ip = Address::parse($input);
 
         self::assertEquals($address, (string)$ip);
-        self::assertEquals($family, $ip->version());
+        self::assertEquals($family, $ip->family());
     }
 
     public function testItThrowsOnCIDR()
@@ -35,6 +35,13 @@ class AddressSpecTest extends TestCase
         Address::parse('nope');
     }
 
+    public function testItThrowsOnInvalidInAddr()
+    {
+        $inAddr = Address::ipv6('2001:db8::42')->inAddr();
+        $this->expectException(InvalidAddressArgumentException::class);
+        Address::fromInAddr($inAddr . $inAddr);
+    }
+
     /**
      * @dataProvider  validByteArrayProvider
      */
@@ -42,19 +49,13 @@ class AddressSpecTest extends TestCase
     {
         $addr = Address::byteArray($byteArray);
         self::assertEquals($byteArray, $addr->byteArray());
-        self::assertEquals($family, $addr->version());
+        self::assertEquals($family, $addr->family());
     }
 
     public function testItThrowsOnInvalidByteArray()
     {
         $this->expectException(InvalidAddressArgumentException::class);
         Address::byteArray([]);
-    }
-
-    public function validByteArrayProvider(): Generator
-    {
-        yield [ [127, 0, 0, 1  ], IPFamily::IPv4];
-        yield [ [127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127], IPFamily::IPv6];
     }
 
     /**
@@ -65,7 +66,7 @@ class AddressSpecTest extends TestCase
         $ip = Address::ipv4($input);
 
         self::assertEquals($address, (string)$ip);
-        self::assertEquals(IPFamily::IPv4, $ip->version());
+        self::assertSame(IPFamily::v4(), $ip->family());
     }
 
     /**
@@ -76,7 +77,7 @@ class AddressSpecTest extends TestCase
         $ip = Address::ipv6($input);
 
         self::assertEquals($address, (string)$ip);
-        self::assertEquals(IPFamily::IPv6, $ip->version());
+        self::assertSame(IPFamily::v6(), $ip->family());
     }
 
     /**
@@ -110,18 +111,24 @@ class AddressSpecTest extends TestCase
     public function testItThrowsOnInvalidIP()
     {
         $family = Address::family('127.0.a.1');
-        self::assertEquals(IPFamily::Invalid, $family);
+        self::assertEquals(IPFamily::invalid(), $family);
     }
 
     public function validIPv4Provider(): Generator
     {
-        yield ['127.0.0.1', '127.0.0.1', IPFamily::IPv4];
-        yield ['8.8.8.8', '8.8.8.8', IPFamily::IPv4];
+        yield ['127.0.0.1', '127.0.0.1', IPFamily::v4()];
+        yield ['8.8.8.8', '8.8.8.8', IPFamily::v4()];
     }
 
     public function validIPv6Provider(): Generator
     {
-        yield ['2001:db8::42', '2001:db8::42', IPFamily::IPv6];
-        yield ['2001:db8::1:1', '2001:db8::1:1', IPFamily::IPv6];
+        yield ['2001:db8::42', '2001:db8::42', IPFamily::v6()];
+        yield ['2001:db8::1:1', '2001:db8::1:1', IPFamily::v6()];
+    }
+
+    public function validByteArrayProvider(): Generator
+    {
+        yield [ [127, 0, 0, 1  ], IPFamily::v4()];
+        yield [ [127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127], IPFamily::v6()];
     }
 }

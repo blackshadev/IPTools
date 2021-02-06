@@ -57,7 +57,6 @@ class IPv6SubnetSpecTest extends TestCase
                 '::',
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  ]
             ]
-
         ];
     }
 }

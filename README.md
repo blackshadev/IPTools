@@ -20,11 +20,11 @@ The state is pretty alpha at this point but feel free to use it. I do my best to
 ```php
 use Littledev\IPTools\Address;
 use Littledev\IPTools\Network;
-use Littledev\IPTools\IPFamily;
 use Littledev\IPTools\Iterator\AddressIterator;
+use Littledev\IPTools\Family\IPFamily;
 
 $ip = Address::parse($_SERVER['REMOTE_ADDR']);
-if ($ip->version() === IPFamily::IPv6) {
+if ($ip->family() === IPFamily::v6()) {
     echo 'Good for you!';
 }
 
@@ -40,7 +40,7 @@ if ($localNetwork->contains($ip)) {
 
 $iterator = new AddressIterator($localNetwork);
 foreach ($iterator as $address) {
-    echo 'In local network: ' . $address;
+    echo 'In local network: ' . $address->address();
 }
 ```
 
@@ -56,6 +56,7 @@ foreach ($iterator as $address) {
 - [v0.2] `constains` now accepts networks and addresses. Generalized 
 - [v0.3] Network Iterators 
 - [v0.4] Network lists
+- [v1.0] Reworked interfaces
 
 ## Limitations
 
@@ -66,10 +67,10 @@ For instance calculating the number of hosts in a IPV6 network. You can do it yo
 
 ```php
 use Littledev\IPTools\Network;
-use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Family\IPFamily;
 
 $net = Network::parse('2001:db8::/64');
-$numbersOfAddresses =  bcpow('2', (string)(IPFamily::MAX_PREFIX_IPV6 - $net->subnet()->prefix()));
+$numbersOfAddresses =  bcpow('2', (string)(IPFamily::v6()->maxPrefix() - $net->subnet()->prefix()));
 ``` 
 
 [ico-version]: https://img.shields.io/packagist/v/littledevnl/iptools.svg?style=flat-square

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Littledev\IPTools;
 
 use Littledev\IPTools\Error\InvalidNetworkArgumentException;
+use Littledev\IPTools\Family\IPFamily;
+use Littledev\IPTools\Family\IPFamilyInterface;
 use Littledev\IPTools\Network\IPv4Network;
 use Littledev\IPTools\Network\IPv6Network;
 use Littledev\IPTools\Network\NetworkInterface;
@@ -15,11 +17,11 @@ final class Network
     {
         $family = self::family($cidr);
 
-        if ($family === IPFamily::IPv4) {
+        if ($family === IPFamily::v4()) {
             return self::ipv4($cidr);
         }
 
-        if ($family === IPFamily::IPv6) {
+        if ($family === IPFamily::v6()) {
             return self::ipv6($cidr);
         }
 
@@ -36,7 +38,7 @@ final class Network
         return IPv6Network::parse($address);
     }
 
-    public static function family(string $cidr): string
+    public static function family(string $cidr): IPFamilyInterface
     {
         $arr = explode('/', $cidr);
         $ip = $arr[0];

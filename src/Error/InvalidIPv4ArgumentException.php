@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Littledev\IPTools\Error;
 
-use Littledev\IPTools\IPFamily;
+use Littledev\IPTools\Family\IPFamily;
 
 class InvalidIPv4ArgumentException extends InvalidArgumentException
 {
@@ -21,7 +21,7 @@ class InvalidIPv4ArgumentException extends InvalidArgumentException
 
     public static function invalidByteArray(array $byteArray): self
     {
-        return new self(sprintf(self::BYTE_ARRAY, IPFamily::OCTET_IPv4, count($byteArray)));
+        return new self(sprintf(self::BYTE_ARRAY, IPFamily::v4()->octets(), count($byteArray)));
     }
 
     public static function binary(string $binaryString): self
