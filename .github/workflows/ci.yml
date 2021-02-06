@@ -31,4 +31,4 @@ jobs:
       - name: Run Infection mutation tests
         run: vendor/bin/infection --threads=4 --min-covered-msi=100 -v -s
         env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
+          INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
