@@ -30,11 +30,11 @@ final class Address
 
     public static function byteArray(array $byteArray): AddressInterface
     {
-        if (count($byteArray) === IPFamily::v4()->octets()) {
+        if (count($byteArray) <= IPFamily::v4()->octets()) {
             return IPv4Address::fromByteArray($byteArray);
         }
 
-        if (count($byteArray) === IPFamily::v6()->octets()) {
+        if (count($byteArray) <= IPFamily::v6()->octets()) {
             return IPv6Address::fromByteArray($byteArray);
         }
 

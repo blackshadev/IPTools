@@ -58,6 +58,7 @@ foreach ($iterator as $address) {
 - [v0.4] Network lists
 - [v1.0] Reworked interfaces
 - [v1.1] Fixed composer PHP requirement, supports PHP7.4 and up
+- [v1.2] Fix for shorter inAddr inputs 
 
 ## Limitations
 
