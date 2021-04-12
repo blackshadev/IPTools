@@ -55,7 +55,7 @@ class AddressSpecTest extends TestCase
     public function testItThrowsOnInvalidByteArray()
     {
         $this->expectException(InvalidAddressArgumentException::class);
-        Address::byteArray([]);
+        Address::byteArray([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]);
     }
 
     /**
