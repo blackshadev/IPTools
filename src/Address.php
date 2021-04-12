@@ -66,11 +66,11 @@ final class Address
 
     public static function fromInAddr(string $inAddr)
     {
-        if (mb_strlen($inAddr) === IPFamily::v4()->octets()) {
+        if (mb_strlen($inAddr) <= IPFamily::v4()->octets()) {
             return IPv4Address::fromInAddr($inAddr);
         }
 
-        if (mb_strlen($inAddr) === IPFamily::v6()->octets()) {
+        if (mb_strlen($inAddr) <= IPFamily::v6()->octets()) {
             return IPv6Address::fromInAddr($inAddr);
         }
 
